@@ -149,17 +149,19 @@ employee* tryLogin(const char* username, const char* password, int employeesSize
 	return NULL;
 }
 
-employee* loginPrompt(int employeesSize, const employee* employees) {
+employee* loginPrompt(int employeesSize, const employee* employees, int isSkip) {
 	int tries = 0;
-	char username[32];
-	char password[32];
+	char username[32] = "Admin";
+	char password[32] = "Admin";
 	employee* loggedInEmployee = NULL;
 	while (tries < 3 && loggedInEmployee == NULL) {
-		// Prompt the user for a username and password
-		printf("Enter username: ");
-		scanf("%s", username);
-		printf("Enter password: ");
-		scanf("%s", password);
+		if (isSkip == 0) {
+			// Prompt the user for a username and password
+			printf("Enter username: ");
+			scanf("%s", username);
+			printf("Enter password: ");
+			scanf("%s", password);
+		}
 
 		// Try to login with the provided username and password
 		loggedInEmployee = tryLogin(username, password, employeesSize, employees);

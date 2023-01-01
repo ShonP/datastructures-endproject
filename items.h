@@ -10,10 +10,10 @@
 
 typedef struct item {
 	int id;
-	char field1[32];
-	char field2[32];
-	float value;
-	bool boolean;
+	char phoneName[32];
+	char brand[32];
+	float price;
+	bool isNew;
 	time_t date;
 } item;
 
@@ -32,11 +32,10 @@ void saveItems(nodeItem* root);
 void freeTreeItems(nodeItem* root);
 void printTreeItems(nodeItem* root);
 nodeItem* searchByIdItem(nodeItem* root, int id);
-nodeItem* searchByField1Item(nodeItem* root, const char* field1);
-nodeItem* searchByField1Item(nodeItem* root, const char* field1);
-nodeItem* searchByField2Item(nodeItem* root, const char* field2);
-nodeItem* searchByValueItem(nodeItem* root, float value);
-nodeItem* searchByBooleanItem(nodeItem* root, bool boolean);
+nodeItem* searchByPhoneNameItem(nodeItem* root, const char* phoneName);
+nodeItem* searchByBrandItem(nodeItem* root, const char* brand);
+nodeItem* searchByValueItem(nodeItem* root, float price);
+nodeItem* searchByIsNewItem(nodeItem* root, bool isNew);
 nodeItem* searchByDateItem(nodeItem* root, time_t date);
 
 nodeItem* initializeItems() {
@@ -58,7 +57,7 @@ nodeItem* initializeItems() {
 		printf("Loading existing items file\n");
 		// Read data from file and addItem it to the tree
 		item data;
-		while (fscanf(fp, "%d,%31[^,],%31[^,],%f,%d,%ld\n", &data.id, data.field1, data.field2, &data.value, &data.boolean, &data.date) == 6) {
+		while (fscanf(fp, "%d,%31[^,],%31[^,],%f,%d,%ld\n", &data.id, data.phoneName, data.brand, &data.price, &data.isNew, &data.date) == 6) {
 			addItem(&root, data);
 		}
 	}
@@ -86,7 +85,6 @@ void addItem(nodeItem** root, item data) {
 		addItem(&(*root)->right, data);
 	}
 }
-
 void removeItem(nodeItem** root, int id) {
 	if (*root == NULL) {
 		return;
@@ -128,7 +126,7 @@ void saveTreeItems(struct nodeItem* root, FILE* fp) {
 		return;
 	}
 
-	fprintf(fp, "%d,%s,%s,%f,%d,%ld\n", root->data.id, root->data.field1, root->data.field2, root->data.value, root->data.boolean, root->data.date);
+	fprintf(fp, "%d,%s,%s,%f,%d,%ld\n", root->data.id, root->data.phoneName, root->data.brand, root->data.price, root->data.isNew, root->data.date);
 	saveTreeItems(root->left, fp);
 	saveTreeItems(root->right, fp);
 }
@@ -156,7 +154,7 @@ void freeTreeItems(nodeItem* root) {
 void printTreeItems(nodeItem* root) {
 	if (root != NULL) {
 		printTreeItems(root->left);
-		printf("%d,%s,%s,%f,%d,%ld\n", root->data.id, root->data.field1, root->data.field2, root->data.value, root->data.boolean, root->data.date);
+		printf("%d,%s,%s,%f,%d\n", root->data.id, root->data.phoneName, root->data.brand, root->data.price, root->data.isNew);
 		printTreeItems(root->right);
 	}
 }
@@ -177,67 +175,67 @@ nodeItem* searchByIdItem(nodeItem* root, int id) {
 	}
 }
 
-nodeItem* searchByField1Item(nodeItem* root, const char* field1) {
+nodeItem* searchByPhoneNameItem(nodeItem* root, const char* phoneName) {
 	if (root == NULL) {
 		return NULL;
 	}
 
-	if (strcmp(root->data.field1, field1) == 0) {
+	if (strcmp(root->data.phoneName, phoneName) == 0) {
 		return root;
 	}
-	else if (strcmp(field1, root->data.field1) < 0) {
-		return searchByField1Item(root->left, field1);
+	else if (strcmp(phoneName, root->data.phoneName) < 0) {
+		return searchByPhoneNameItem(root->left, phoneName);
 	}
 	else {
-		return searchByField1Item(root->right, field1);
+		return searchByPhoneNameItem(root->right, phoneName);
 	}
 }
 
-nodeItem* searchByField2Item(nodeItem* root, const char* field2) {
+nodeItem* searchByBrandItem(nodeItem* root, const char* brand) {
 	if (root == NULL) {
 		return NULL;
 	}
 
-	if (strcmp(root->data.field2, field2) == 0) {
+	if (strcmp(root->data.brand, brand) == 0) {
 		return root;
 	}
-	else if (strcmp(field2, root->data.field2) < 0) {
-		return searchByField2Item(root->left, field2);
+	else if (strcmp(brand, root->data.brand) < 0) {
+		return searchByBrandItem(root->left, brand);
 	}
 	else {
-		return searchByField2Item(root->right, field2);
+		return searchByBrandItem(root->right, brand);
 	}
 }
 
-nodeItem* searchByValueItem(nodeItem* root, float value) {
+nodeItem* searchByPriceItem(nodeItem* root, float price) {
 	if (root == NULL) {
 		return NULL;
 	}
 
-	if (root->data.value == value) {
+	if (root->data.price == price) {
 		return root;
 	}
-	else if (value < root->data.value) {
-		return searchByValueItem(root->left, value);
+	else if (price < root->data.price) {
+		return searchByPriceItem(root->left, price);
 	}
 	else {
-		return searchByValueItem(root->right, value);
+		return searchByPriceItem(root->right, price);
 	}
 }
 
-nodeItem* searchByBooleanItem(nodeItem* root, bool boolean) {
+nodeItem* searchByIsNewItem(nodeItem* root, bool isNew) {
 	if (root == NULL) {
 		return NULL;
 	}
 
-	if (root->data.boolean == boolean) {
+	if (root->data.isNew == isNew) {
 		return root;
 	}
-	else if (boolean < root->data.boolean) {
-		return searchByBooleanItem(root->left, boolean);
+	else if (isNew < root->data.isNew) {
+		return searchByIsNewItem(root->left, isNew);
 	}
 	else {
-		return searchByBooleanItem(root->right, boolean);
+		return searchByIsNewItem(root->right, isNew);
 	}
 }
 
