@@ -21,28 +21,28 @@ typedef struct nodeItem {
 } nodeItem;
 
 // Function prototypes
-nodeItem* initialize();
-void add(nodeItem** root, item data);
-void remove_item(nodeItem** root, int id);
-void saveTree(struct nodeItem* root, FILE* fp);
-void save(nodeItem* root);
-void free_tree(nodeItem* root);
-void print_tree(nodeItem* root);
-nodeItem* search_id(nodeItem* root, int id);
-nodeItem* search_field1(nodeItem* root, const char* field1);
-nodeItem* search_field1(nodeItem* root, const char* field1);
-nodeItem* search_field2(nodeItem* root, const char* field2);
-nodeItem* search_value(nodeItem* root, float value);
-nodeItem* search_boolean(nodeItem* root, bool boolean);
-nodeItem* search_date(nodeItem* root, time_t date);
+nodeItem* initializeItems();
+void addItem(nodeItem** root, item data);
+void removeItem(nodeItem** root, int id);
+void saveTreeItems(struct nodeItem* root, FILE* fp);
+void saveItems(nodeItem* root);
+void freeTreeItems(nodeItem* root);
+void printTreeItems(nodeItem* root);
+nodeItem* searchByIdItem(nodeItem* root, int id);
+nodeItem* searchByField1Item(nodeItem* root, const char* field1);
+nodeItem* searchByField1Item(nodeItem* root, const char* field1);
+nodeItem* searchByField2Item(nodeItem* root, const char* field2);
+nodeItem* searchByValueItem(nodeItem* root, float value);
+nodeItem* searchByBooleanItem(nodeItem* root, bool boolean);
+nodeItem* searchByDateItem(nodeItem* root, time_t date);
 
-nodeItem* initialize() {
+nodeItem* initializeItems() {
 	nodeItem* root = NULL;
 
 	// Open file for reading
 	FILE* fp = fopen("items.bin", "r");
 	if (fp == NULL) {
-		printf("File does not exist, creating new file\n");
+		printf("Initialize new file items\n");
 
 		// File doesn't exist, create it
 		fp = fopen("items.bin", "w");
@@ -52,11 +52,11 @@ nodeItem* initialize() {
 		}
 	}
 	else {
-		printf("File existing using same file\n");
-		// Read data from file and add it to the tree
+		printf("Loading existing items file\n");
+		// Read data from file and addItem it to the tree
 		item data;
 		while (fscanf(fp, "%d,%31[^,],%31[^,],%f,%d,%ld\n", &data.id, data.field1, data.field2, &data.value, &data.boolean, &data.date) == 6) {
-			add(&root, data);
+			addItem(&root, data);
 		}
 	}
 
@@ -65,7 +65,7 @@ nodeItem* initialize() {
 }
 
 
-void add(nodeItem** root, item data) {
+void addItem(nodeItem** root, item data) {
 	// If the tree is empty, create a new root nodeItem
 	if (*root == NULL) {
 		*root = malloc(sizeof(nodeItem));
@@ -75,26 +75,26 @@ void add(nodeItem** root, item data) {
 		return;
 	}
 
-	// Recursively add the data to the appropriate position in the tree
+	// Recursively addItem the data to the appropriate position in the tree
 	if (data.id < (*root)->data.id) {
-		add(&(*root)->left, data);
+		addItem(&(*root)->left, data);
 	}
 	else {
-		add(&(*root)->right, data);
+		addItem(&(*root)->right, data);
 	}
 }
 
-void remove_item(nodeItem** root, int id) {
+void removeItem(nodeItem** root, int id) {
 	if (*root == NULL) {
 		return;
 	}
 
 	// Recursively search the tree for the nodeItem with the given id
 	if (id < (*root)->data.id) {
-		remove_item(&(*root)->left, id);
+		removeItem(&(*root)->left, id);
 	}
 	else if (id > (*root)->data.id) {
-		remove_item(&(*root)->right, id);
+		removeItem(&(*root)->right, id);
 	}
 	else {
 		// Node found, remove it
@@ -114,69 +114,67 @@ void remove_item(nodeItem** root, int id) {
 				!= NULL) {
 				successor = successor->left;
 			}  (*root)->data = successor->data;
-			remove_item(&(*root)->right, successor->data.id);
+			removeItem(&(*root)->right, successor->data.id);
 		}
 
 	}
 }
 
-void saveTree(struct nodeItem* root, FILE* fp) {
+void saveTreeItems(struct nodeItem* root, FILE* fp) {
 	if (root == NULL) {
 		return;
 	}
 
 	fprintf(fp, "%d,%s,%s,%f,%d,%ld\n", root->data.id, root->data.field1, root->data.field2, root->data.value, root->data.boolean, root->data.date);
-	saveTree(root->left, fp);
-	saveTree(root->right, fp);
+	saveTreeItems(root->left, fp);
+	saveTreeItems(root->right, fp);
 }
 
-void save(struct Node* root) {
+void saveItems(struct Node* root) {
 	FILE* fp = fopen("items.bin", "w");
 	if (fp == NULL) {
 		// Error opening file
 		return;
 	}
 
-	saveTree(root, fp);
+	saveTreeItems(root, fp);
 
 	fclose(fp);
 }
 
-void free_tree(nodeItem* root) {
+void freeTreeItems(nodeItem* root) {
 	if (root != NULL) {
-		free_tree(root->left);
-		free_tree(root->right);
+		freeTreeItems(root->left);
+		freeTreeItems(root->right);
 		free(root);
 	}
 }
 
-void print_tree(nodeItem* root) {
-	if (root == NULL) {
-		return;
+void printTreeItems(nodeItem* root) {
+	if (root != NULL) {
+		printTreeItems(root->left);
+		printf("%d,%s,%s,%f,%d,%ld\n", root->data.id, root->data.field1, root->data.field2, root->data.value, root->data.boolean, root->data.date);
+		printTreeItems(root->right);
 	}
-
-	print_tree(root->left);
-	printf("id: %d, field1: %s, field2: %s, value: %f, boolean: %d, date: %ld\n", root->data.id, root->data.field1, root->data.field2, root->data.value, root->data.boolean, root->data.date);
-	print_tree(root->right);
 }
 
-nodeItem* search_id(nodeItem* root, int id) {
+nodeItem* searchByIdItem(nodeItem* root, int id) {
 	if (root == NULL) {
 		return NULL;
 	}
 
-	if (root->data.id == id) {
-		return root;
+	if (id < root->data.id) {
+		return searchByIdItem(root->left, id);
 	}
-	else if (id < root->data.id) {
-		return search_id(root->left, id);
+	else if (id > root->data.id) {
+		return searchByIdItem(root->right, id);
 	}
 	else {
-		return search_id(root->right, id);
+		return root;
 	}
 }
 
-nodeItem* search_field1(nodeItem* root, const char* field1) {
+nodeItem* searchByField1Item(nodeItem* root, const char* field1) {
 	if (root == NULL) {
 		return NULL;
 	}
@@ -185,14 +183,14 @@ nodeItem* search_field1(nodeItem* root, const char* field1) {
 		return root;
 	}
 	else if (strcmp(field1, root->data.field1) < 0) {
-		return search_field1(root->left, field1);
+		return searchByField1Item(root->left, field1);
 	}
 	else {
-		return search_field1(root->right, field1);
+		return searchByField1Item(root->right, field1);
 	}
 }
 
-nodeItem* search_field2(nodeItem* root, const char* field2) {
+nodeItem* searchByField2Item(nodeItem* root, const char* field2) {
 	if (root == NULL) {
 		return NULL;
 	}
@@ -201,14 +199,14 @@ nodeItem* search_field2(nodeItem* root, const char* field2) {
 		return root;
 	}
 	else if (strcmp(field2, root->data.field2) < 0) {
-		return search_field2(root->left, field2);
+		return searchByField2Item(root->left, field2);
 	}
 	else {
-		return search_field2(root->right, field2);
+		return searchByField2Item(root->right, field2);
 	}
 }
 
-nodeItem* search_value(nodeItem* root, float value) {
+nodeItem* searchByValueItem(nodeItem* root, float value) {
 	if (root == NULL) {
 		return NULL;
 	}
@@ -217,14 +215,14 @@ nodeItem* search_value(nodeItem* root, float value) {
 		return root;
 	}
 	else if (value < root->data.value) {
-		return search_value(root->left, value);
+		return searchByValueItem(root->left, value);
 	}
 	else {
-		return search_value(root->right, value);
+		return searchByValueItem(root->right, value);
 	}
 }
 
-nodeItem* search_boolean(nodeItem* root, bool boolean) {
+nodeItem* searchByBooleanItem(nodeItem* root, bool boolean) {
 	if (root == NULL) {
 		return NULL;
 	}
@@ -233,14 +231,14 @@ nodeItem* search_boolean(nodeItem* root, bool boolean) {
 		return root;
 	}
 	else if (boolean < root->data.boolean) {
-		return search_boolean(root->left, boolean);
+		return searchByBooleanItem(root->left, boolean);
 	}
 	else {
-		return search_boolean(root->right, boolean);
+		return searchByBooleanItem(root->right, boolean);
 	}
 }
 
-nodeItem* search_date(nodeItem* root, time_t date) {
+nodeItem* searchByDateItem(nodeItem* root, time_t date) {
 	if (root == NULL) {
 		return NULL;
 	}
@@ -249,9 +247,9 @@ nodeItem* search_date(nodeItem* root, time_t date) {
 		return root;
 	}
 	else if (date < root->data.date) {
-		return search_date(root->left, date);
+		return searchByDateItem(root->left, date);
 	}
 	else {
-		return search_date(root->right, date);
+		return searchByDateItem(root->right, date);
 	}
 }

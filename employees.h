@@ -11,6 +11,7 @@ typedef struct employee {
 	char fullName[32];
 }employee;
 
+
 void saveEmployees(const employee* employees, size_t numEmployees) {
 	FILE* fp = fopen("employees.bin", "wb");
 	if (fp == NULL) {
@@ -29,47 +30,56 @@ void saveEmployees(const employee* employees, size_t numEmployees) {
 // Function to add an employee to the array
 void addEmployee(employee** employees, size_t* numEmployees, const employee* newEmployee) {
 	// Allocate memory for the new employee
-	*employees = realloc(*employees, (*numEmployees + 1) * sizeof(employee));
-	if (*employees == NULL) {
+	employee* newEmployees = (employee*)malloc(sizeof(employee) * (*numEmployees + 1));
+	if (newEmployees == NULL) {
 		perror("Error allocating memory");
 		exit(EXIT_FAILURE);
 	}
 
+	// Copy the old employees to the new array
+	for (size_t i = 0; i < *numEmployees; i++) {
+		newEmployees[i] = (*employees)[i];
+	}
+
 	// Add the new employee to the array
-	(*employees)[*numEmployees] = *newEmployee;
+	newEmployees[*numEmployees] = *newEmployee;
+
+	// Free the old array
+	free(*employees);
+
+	// Update the pointer to the array
+	*employees = newEmployees;
+
+	// Update the number of employees
 	(*numEmployees)++;
 }
 
 // Function to remove an employee from the array
 void removeEmployee(employee** employees, size_t* numEmployees, const char* username) {
-	// Find the index of the employee to be removed
-	int index = -1;
-	for (size_t i = 0; i < *numEmployees; i++) {
-		if (strcmp((*employees)[i].username, username) == 0) {
-			index = i;
-			break;
-		}
-	}
-
-	// If the employee was not found, return
-	if (index == -1) {
-		return;
-	}
-
-	// Shift the elements after the removed employee down one position
-	for (size_t i = index; i < *numEmployees - 1; i++) {
-		(*employees)[i] = (*employees)[i + 1];
-	}
-
-	// Decrease the number of employees by 1
-	(*numEmployees)--;
-
-	// Reallocate memory for the array
-	*employees = realloc(*employees, *numEmployees * sizeof(employee));
-	if (*employees == NULL) {
+	// Allocate memory for the new employee
+	employee* newEmployees = (employee*)malloc(sizeof(employee) * (*numEmployees - 1));
+	if (newEmployees == NULL) {
 		perror("Error allocating memory");
 		exit(EXIT_FAILURE);
 	}
+
+	// Copy the old employees to the new array
+	size_t j = 0;
+	for (size_t i = 0; i < *numEmployees; i++) {
+		if (strcmp((*employees)[i].username, username) != 0) {
+			newEmployees[j] = (*employees)[i];
+			j++;
+		}
+	}
+
+	// Free the old array
+	free(*employees);
+
+	// Update the pointer to the array
+	*employees = newEmployees;
+
+	// Update the number of employees
+	(*numEmployees)--;
 }
 
 size_t initializeEmployees(employee** employees) {
@@ -88,7 +98,7 @@ size_t initializeEmployees(employee** employees) {
 	}
 	else {
 		// If the input file exists, read the data from the file and store it in an array of structs
-		printf("Loading existing file\n");
+		printf("Loading existing employees file\n");
 		fread(&array_size, sizeof(size_t), 1, infile);
 		d_array = malloc(array_size * sizeof(employee));
 		for (i = 0; i < array_size; i++) {
@@ -132,10 +142,13 @@ employee* login(size_t employees_size, const employee* employees) {
 		printf("You have exceeded the maximum number of tries.\n");
 		exit(0);
 	}
+	
+	//clear console
+	system("cls");
 
 	printf("Login successful!\n");
 	printf("Access level: %d\n", loggedInEmployee->accessLevel);
-	printf("Full name: %s\n", loggedInEmployee->fullName);
+	printf("Full name: %s\n\n\n", loggedInEmployee->fullName);
 
 	return loggedInEmployee;
 }
