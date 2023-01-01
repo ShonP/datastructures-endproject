@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include <time.h>
 
+#ifndef _LOGS_H_
+#define _LOGS_H_
+
 #pragma warning(disable:4996)
 
 void initializeLogs() {
@@ -19,7 +22,6 @@ void initializeLogs() {
 	}
 	else {
 		printf("Loading existing logs file\n");
-		// Read data from file and add it to the tree
 	}
 }
 
@@ -37,5 +39,8 @@ void logMessage(char* log) {
 		return;
 	}
 	fprintf(fp, "%s\n", logAndTime);
+	printf("%s\n", logAndTime);
 	fclose(fp);
 }
+
+#endif

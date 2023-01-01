@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include <time.h>
 
+#ifndef _ITEMS_H_
+#define _ITEMS_H_
+
 #pragma warning(disable:4996)
 
 typedef struct item {
@@ -253,3 +256,5 @@ nodeItem* searchByDateItem(nodeItem* root, time_t date) {
 		return searchByDateItem(root->right, date);
 	}
 }
+
+#endif
