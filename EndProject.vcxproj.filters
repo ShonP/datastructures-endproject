@@ -29,7 +29,7 @@
     <ClInclude Include="logs.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="itemsprompts.h">
+    <ClInclude Include="itemsPrompts.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="customers.h">

@@ -136,7 +136,7 @@
     <ClInclude Include="employee.h" />
     <ClInclude Include="employeePrompts.h" />
     <ClInclude Include="items.h" />
-    <ClInclude Include="itemsprompts.h" />
+    <ClInclude Include="itemsPrompts.h" />
     <ClInclude Include="logs.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

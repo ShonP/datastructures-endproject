@@ -4,7 +4,7 @@
 #include "employee.h"
 #include "employeePrompts.h"
 #include "items.h"
-#include "itemsprompts.h"
+#include "itemsPrompts.h"
 
 // create void function that include all employee prompts
 void employeePrompts(employee** employees, int* employeeSize) {
