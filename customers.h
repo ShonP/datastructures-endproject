@@ -44,27 +44,28 @@ void addCustomer(nodeCustomer** customers, customer data) {
 	current->next = newNode;
 }
 
-// remove Customer function by id
-void removeCustomer(nodeCustomer** customers, int id) {
+// remove Customer function by id and return success
+int removeCustomer(nodeCustomer** customers, int id) {
 	if (*customers == NULL) {
-		return;
+		return 0;
 	}
 	if ((*customers)->data.id == id) {
 		nodeCustomer* temp = *customers;
 		*customers = (*customers)->next;
 		free(temp);
-		return;
+		return 1;
 	}
 	nodeCustomer* current = *customers;
 	while (current->next != NULL && current->next->data.id != id) {
 		current = current->next;
 	}
 	if (current->next == NULL) {
-		return;
+		return 0;
 	}
 	nodeCustomer* temp = current->next;
 	current->next = current->next->next;
 	free(temp);
+	return 1;
 }
 
 // create initialize function of customers that reads from file and is sorted by joinedDate
@@ -81,9 +82,13 @@ void initializeCustomers(nodeCustomer** customers) {
 	}
 	else {
 		printf("Loading existing customers file\n");
-		// Read data from file and add it to the tree
-		customer data;
-		while (fread(&data, sizeof(customer), 1, fp)) {
+		// Read data from file and add it to the linked list
+		while (1) {
+			customer data;
+			int result = fread(&data, sizeof(customer), 1, fp);
+			if (result == 0) {
+				break;
+			}
 			addCustomer(customers, data);
 		}
 	}
@@ -147,7 +152,7 @@ void printCustomer(customer* data) {
 void saveCustomers(nodeCustomer* customers) {
 	FILE* fp = fopen("customers.bin", "w");
 	if (fp == NULL) {
-		printf("Error opening file\n");
+		printf("Error creating file\n");
 		return;
 	}
 	while (customers != NULL) {
@@ -156,5 +161,4 @@ void saveCustomers(nodeCustomer* customers) {
 	}
 	fclose(fp);
 }
-
 #endif
