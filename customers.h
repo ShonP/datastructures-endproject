@@ -11,8 +11,6 @@ typedef struct customer {
 	int id;
 	char name[32];
 	char address[32];
-	int itemsCount;
-	item* items;
 	time_t date;
 } customer;
 
@@ -23,25 +21,31 @@ typedef struct nodeCustomer {
 } nodeCustomer;
 
 // create addCustomer function and keep the list sorted by joinedDate
-void addCustomer(nodeCustomer** customers, customer data) {
+void addCustomer(nodeCustomer** customers, customer* data) {
 	nodeCustomer* newNode = (nodeCustomer*)malloc(sizeof(nodeCustomer));
-	newNode->data = data;
+	newNode->data = *data;
 	newNode->next = NULL;
+
 	if (*customers == NULL) {
 		*customers = newNode;
 		return;
 	}
-	if (newNode->data.date < (*customers)->data.date) {
-		newNode->next = *customers;
-		*customers = newNode;
-		return;
-	}
+
 	nodeCustomer* current = *customers;
-	while (current->next != NULL && current->next->data.date < newNode->data.date) {
+	nodeCustomer* previous = NULL;
+	while (current != NULL && current->data.date < newNode->data.date) {
+		previous = current;
 		current = current->next;
 	}
-	newNode->next = current->next;
-	current->next = newNode;
+
+	if (previous == NULL) {
+		newNode->next = *customers;
+		*customers = newNode;
+	}
+	else {
+		newNode->next = current;
+		previous->next = newNode;
+	}
 }
 
 // remove Customer function by id and return success
@@ -70,6 +74,8 @@ int removeCustomer(nodeCustomer** customers, int id) {
 
 // create initialize function of customers that reads from file and is sorted by joinedDate
 void initializeCustomers(nodeCustomer** customers) {
+	// allocate customers root
+	*customers = NULL;
 	FILE* fp = fopen("customers.bin", "r");
 	if (fp == NULL) {
 		printf("Initialize new file customers\n");
@@ -89,7 +95,7 @@ void initializeCustomers(nodeCustomer** customers) {
 			if (result == 0) {
 				break;
 			}
-			addCustomer(customers, data);
+			addCustomer(customers, &data);
 		}
 	}
 }
@@ -144,9 +150,15 @@ void printCustomer(customer* data) {
 	printf("Customer Name: %s\n", data->name);
 	printf("Customer Address: %s\n", data->address);
 	printf("Customer Joined Date: %s", ctime(&data->date));
-	printf("Customer Items Count: %d\n", data->itemsCount);
 }
 
+// create print all linkedlist
+void printCustomers(nodeCustomer* customers) {
+	while (customers != NULL) {
+		printCustomer(&customers->data);
+		customers = customers->next;
+	}
+}
 
 // create save function that saves the list to file
 void saveCustomers(nodeCustomer* customers) {

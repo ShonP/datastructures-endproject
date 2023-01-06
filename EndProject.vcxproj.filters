@@ -15,34 +15,34 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="EndProject.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="items.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="logs.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="itemsPrompts.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="customers.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="customersprompts.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="employee.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="employeePrompts.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="items.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="itemsPrompts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="customerItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="customers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="customersPrompts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="employee.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

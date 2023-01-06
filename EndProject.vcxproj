@@ -127,12 +127,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="EndProject.c" />
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="customerItem.h" />
     <ClInclude Include="customers.h" />
-    <ClInclude Include="customersprompts.h" />
+    <ClInclude Include="customersPrompts.h" />
     <ClInclude Include="employee.h" />
     <ClInclude Include="employeePrompts.h" />
     <ClInclude Include="items.h" />

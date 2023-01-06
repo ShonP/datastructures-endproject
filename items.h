@@ -67,22 +67,20 @@ nodeItem* initializeItems() {
 }
 
 
-void addItem(nodeItem** root, item data) {
-	// If the tree is empty, create a new root nodeItem
+void addItem(nodeItem** root, item* data) {
 	if (*root == NULL) {
-		*root = malloc(sizeof(nodeItem));
-		(*root)->data = data;
+		*root = (nodeItem*)malloc(sizeof(nodeItem));
+		(*root)->data = *data;
 		(*root)->left = NULL;
 		(*root)->right = NULL;
-		return;
-	}
-
-	// Recursively addItem the data to the appropriate position in the tree
-	if (data.id < (*root)->data.id) {
-		addItem(&(*root)->left, data);
 	}
 	else {
-		addItem(&(*root)->right, data);
+		if (data->id < (*root)->data.id) {
+			addItem(&(*root)->left, data);
+		}
+		else if (data->id > (*root)->data.id) {
+			addItem(&(*root)->right, data);
+		}
 	}
 }
 void removeItem(nodeItem** root, int id) {
@@ -154,7 +152,7 @@ void freeTreeItems(nodeItem* root) {
 void printTreeItems(nodeItem* root) {
 	if (root != NULL) {
 		printTreeItems(root->left);
-		printf("%d,%s,%s,%f,%d\n", root->data.id, root->data.phoneName, root->data.brand, root->data.price, root->data.isNew);
+		printf("%d,%s,%s,%f,%d,%s\n", root->data.id, root->data.phoneName, root->data.brand, root->data.price, root->data.isNew, ctime(&root->data.date));
 		printTreeItems(root->right);
 	}
 }

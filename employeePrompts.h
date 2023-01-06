@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "employee.h"
+#include "logs.h"
 
 #ifndef _EMPLOYEES_PROMPTS_H_
 #define _EMPLOYEES_PROMPTS_H_
