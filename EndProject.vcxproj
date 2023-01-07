@@ -132,11 +132,11 @@
   <ItemGroup>
     <ClInclude Include="customerItem.h" />
     <ClInclude Include="customerItemPrompots.h" />
-    <ClInclude Include="customers.h" />
+    <ClInclude Include="customer.h" />
     <ClInclude Include="customersPrompts.h" />
     <ClInclude Include="employee.h" />
     <ClInclude Include="employeePrompts.h" />
-    <ClInclude Include="items.h" />
+    <ClInclude Include="item.h" />
     <ClInclude Include="itemsPrompts.h" />
     <ClInclude Include="logs.h" />
     <ClInclude Include="shopPrompts.h" />

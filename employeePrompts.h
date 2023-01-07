@@ -99,16 +99,18 @@ void viewAllEmployeesPrompt(const employee* employees, int employeesSize) {
 // create all view prompts prompt
 void level1EmployeePrompts(const employee** employees, int* employeesSize) {
 	system("cls");
-	int choice = 0;
-	while (choice != 4) {
+	int choice;
+	do {
 		printf("-----------------\n\n\n\n");
 		printf("1. View all employees\n");
 		printf("2. Search employee by full name\n");
 		printf("3. Search employee by username\n");
-		printf("4. Back\n");
+		printf("0. Back\n");
 		printf("Enter your choice: ");
 		scanf("%d", &choice);
 		switch (choice) {
+		case 0:
+			break;
 		case 1:
 			viewAllEmployeesPrompt(*employees, *employeesSize);
 			break;
@@ -124,8 +126,81 @@ void level1EmployeePrompts(const employee** employees, int* employeesSize) {
 			printf("Invalid choice\n");
 			break;
 		}
-	}
+	} while (choice != 0);
 
+}
+// create all view prompts prompt
+
+void level2EmployeePrompts(const employee** employees, int* employeesSize) {
+	system("cls");
+	int choice;
+	do {
+		printf("-----------------\n\n\n\n");
+		printf("1. View all employees\n");
+		printf("2. Search employee by full name\n");
+		printf("3. Search employee by username\n");
+		printf("4. Create employee\n");
+		printf("0. Back\n");
+		printf("Enter your choice: ");
+		scanf("%d", &choice);
+		switch (choice) {
+		case 0:
+			break;
+		case 1:
+			viewAllEmployeesPrompt(*employees, *employeesSize);
+			break;
+		case 2:
+			searchEmployeeByFullNamePrompt(*employees, *employeesSize);
+			break;
+		case 3:
+			searchEmployeeByUsernamePrompt(*employees, *employeesSize);
+			break;
+		case 4:
+			createEmployeePrompt(employees, employeesSize);
+			break;
+		default:
+			printf("Invalid choice\n");
+			break;
+		}
+	} while (choice != 0);
+}
+
+void level3EmployeePrompts(const employee** employees, int* employeesSize) {
+	system("cls");
+	int choice;
+	do {
+		printf("-----------------\n\n\n\n");
+		printf("1. View all employees\n");
+		printf("2. Search employee by full name\n");
+		printf("3. Search employee by username\n");
+		printf("4. Create employee\n");
+		printf("5. Remove employee\n");
+		printf("0. Back\n");
+		printf("Enter your choice: ");
+		scanf("%d", &choice);
+		switch (choice) {
+		case 0:
+			break;
+		case 1:
+			viewAllEmployeesPrompt(*employees, *employeesSize);
+			break;
+		case 2:
+			searchEmployeeByFullNamePrompt(*employees, *employeesSize);
+			break;
+		case 3:
+			searchEmployeeByUsernamePrompt(*employees, *employeesSize);
+			break;
+		case 4:
+			createEmployeePrompt(employees, employeesSize);
+			break;
+		case 5:
+			removeEmployeePrompt(employees, employeesSize);
+			break;
+		default:
+			printf("Invalid choice\n");
+			break;
+		}
+	} while (choice != 0);
 }
 
 

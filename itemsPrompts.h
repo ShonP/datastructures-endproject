@@ -4,11 +4,12 @@
 #include <string.h>
 #include <time.h>
 #include "logs.h"
-#include "items.h"
+#include "item.h"
 
 #ifndef _ITEMS_PROMPTS_H
 #define _ITEMS_PROMPTS_H
 #pragma warning(disable:4996)
+
 //create item prompt by addItem function nodeItem
 void createItemPrompt(nodeItem** items) {
 	system("cls");
@@ -84,66 +85,39 @@ void searchItemByPhoneNamePrompt(nodeItem* items) {
 	}
 }
 
-//search item by brand prompt by searchByBrandItem function nodeItem
+//void search item by brand prompt by searchByBrandItem function listItem
 void searchItemByBrandPrompt(nodeItem* items) {
 	system("cls");
 	char brand[32];
 	printf("Enter brand: ");
 	scanf("%s", brand);
-	nodeItem* result = searchByBrandItem(items, brand);
+	listItem* result = searchByBrandItem(items, brand);
 	if (result == NULL) {
 		printf("Item not found\n");
 	}
 	else {
-		printf("Item found: %d, %s, %s, %f, %d, %ld\n", result->data.id, result->data.phoneName, result->data.brand, result->data.price, result->data.isNew, result->data.date);
+		while (result != NULL) {
+			printf("Item found: %d, %s, %s, %f, %d, %ld\n", result->data.id, result->data.phoneName, result->data.brand, result->data.price, result->data.isNew, result->data.date);
+			result = result->next;
+		}
 	}
 }
-
-// search item by price prompt by searchByPriceItem function nodeItem
-void searchItemByPricePrompt(nodeItem* items) {
-	system("cls");
-	float price;
-	printf("Enter price: ");
-	scanf("%f", &price);
-	nodeItem* result = searchByPriceItem(items, price);
-	if (result == NULL) {
-		printf("Item not found\n");
-	}
-	else {
-		printf("Item found: %d, %s, %s, %f, %d, %ld\n", result->data.id, result->data.phoneName, result->data.brand, result->data.price, result->data.isNew, result->data.date);
-	}
-}
-
-// search item by isNew prompt by searchByIsNewItem function nodeItem
 void searchItemByIsNewPrompt(nodeItem* items) {
 	system("cls");
 	int isNew;
 	printf("Enter isNew: ");
 	scanf("%d", &isNew);
-	nodeItem* result = searchByIsNewItem(items, isNew);
+	listItem* result = searchByIsNewItem(items, isNew);
 	if (result == NULL) {
 		printf("Item not found\n");
 	}
 	else {
-		printf("Item found: %d, %s, %s, %f, %d, %ld\n", result->data.id, result->data.phoneName, result->data.brand, result->data.price, result->data.isNew, result->data.date);
+		while (result != NULL) {
+			printf("Item found: %d, %s, %s, %f, %d, %ld\n", result->data.id, result->data.phoneName, result->data.brand, result->data.price, result->data.isNew, result->data.date);
+			result = result->next;
+		}
 	}
 }
-
-// search item by date prompt by searchByDateItem function nodeItem
-void searchItemByDatePrompt(nodeItem* items) {
-	system("cls");
-	long date;
-	printf("Enter date: ");
-	scanf("%ld", &date);
-	nodeItem* result = searchByDateItem(items, date);
-	if (result == NULL) {
-		printf("Item not found\n");
-	}
-	else {
-		printf("Item found: %d, %s, %s, %f, %d, %ld\n", result->data.id, result->data.phoneName, result->data.brand, result->data.price, result->data.isNew, result->data.date);
-	}
-}
-
 
 void level1ItemPrompts(nodeItem** root) {
 	system("cls");
@@ -154,10 +128,8 @@ void level1ItemPrompts(nodeItem** root) {
 		printf("3. Search item by id\n");
 		printf("4. Search item by phone name\n");
 		printf("5. Search item by brand\n");
-		printf("6. Search item by price\n");
-		printf("7. Search item by isNew\n");
-		printf("8. Search item by date\n");
-		printf("0. Exit\n");
+		printf("6. Search item by isNew\n");
+		printf("0. Back\n");
 		printf("Enter your choice: ");
 		scanf("%d", &choice);
 		switch (choice) {
@@ -177,13 +149,93 @@ void level1ItemPrompts(nodeItem** root) {
 			searchItemByBrandPrompt(*root);
 			break;
 		case 6:
-			searchItemByPricePrompt(*root);
-			break;
-		case 7:
 			searchItemByIsNewPrompt(*root);
 			break;
-		case 8:
-			searchItemByDatePrompt(*root);
+		case 0:
+			break;
+		default:
+			printf("Invalid choice\n");
+			break;
+		}
+	} while (choice != 0);
+}
+void level2ItemPrompts(nodeItem** root) {
+	system("cls");
+	int choice;
+	do {
+		printf("1. View all items\n");
+		printf("2. Create item\n");
+		printf("3. Search item by id\n");
+		printf("4. Search item by phone name\n");
+		printf("5. Search item by brand\n");
+		printf("6. Search item by isNew\n");
+		//missing update
+		printf("0. Back\n");
+		printf("Enter your choice: ");
+		scanf("%d", &choice);
+		switch (choice) {
+		case 1:
+			viewAllItemsPrompt(*root);
+			break;
+		case 2:
+			createItemPrompt(root);
+			break;
+		case 3:
+			searchItemByIdPrompt(*root);
+			break;
+		case 4:
+			searchItemByPhoneNamePrompt(*root);
+			break;
+		case 5:
+			searchItemByBrandPrompt(*root);
+			break;
+		case 6:
+			searchItemByIsNewPrompt(*root);
+			break;
+		case 0:
+			break;
+		default:
+			printf("Invalid choice\n");
+			break;
+		}
+	} while (choice != 0);
+}
+
+void level3ItemPrompts(nodeItem** root) {
+	system("cls");
+	int choice;
+	do {
+		printf("1. View all items\n");
+		printf("2. Create item\n");
+		printf("3. Search item by id\n");
+		printf("4. Search item by phone name\n");
+		printf("5. Search item by brand\n");
+		printf("6. Search item by isNew\n");
+		printf("7. Delete item\n");
+		printf("0. Back\n");
+		printf("Enter your choice: ");
+		scanf("%d", &choice);
+		switch (choice) {
+		case 1:
+			viewAllItemsPrompt(*root);
+			break;
+		case 2:
+			createItemPrompt(root);
+			break;
+		case 3:
+			searchItemByIdPrompt(*root);
+			break;
+		case 4:
+			searchItemByPhoneNamePrompt(*root);
+			break;
+		case 5:
+			searchItemByBrandPrompt(*root);
+			break;
+		case 6:
+			searchItemByIsNewPrompt(*root);
+			break;
+		case 7:
+			deleteItemPrompt(root);
 			break;
 		case 0:
 			break;

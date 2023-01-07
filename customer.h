@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "items.h"
+#include "item.h"
 #ifndef _CUSTOMERS_H_
 #define _CUSTOMERS_H_
 

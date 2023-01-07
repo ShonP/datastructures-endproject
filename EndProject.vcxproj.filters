@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\models">
+      <UniqueIdentifier>{8f4292cd-4e0d-4215-b66e-71cc4c2c4070}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\prompts">
+      <UniqueIdentifier>{1c5d4f73-5071-46dc-8d4f-c4a6f017ef09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\utils">
+      <UniqueIdentifier>{f69a541a-62e4-4050-962e-71e551a9f5be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -20,35 +29,35 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="logs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="employeePrompts.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="items.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="itemsPrompts.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="customerItem.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\models</Filter>
     </ClInclude>
-    <ClInclude Include="customers.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="customersPrompts.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="customer.h">
+      <Filter>Header Files\models</Filter>
     </ClInclude>
     <ClInclude Include="employee.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\models</Filter>
+    </ClInclude>
+    <ClInclude Include="item.h">
+      <Filter>Header Files\models</Filter>
     </ClInclude>
     <ClInclude Include="customerItemPrompots.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\prompts</Filter>
+    </ClInclude>
+    <ClInclude Include="customersPrompts.h">
+      <Filter>Header Files\prompts</Filter>
+    </ClInclude>
+    <ClInclude Include="employeePrompts.h">
+      <Filter>Header Files\prompts</Filter>
+    </ClInclude>
+    <ClInclude Include="itemsPrompts.h">
+      <Filter>Header Files\prompts</Filter>
     </ClInclude>
     <ClInclude Include="shopPrompts.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\prompts</Filter>
+    </ClInclude>
+    <ClInclude Include="logs.h">
+      <Filter>Header Files\utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

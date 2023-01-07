@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "items.h"
+#include "item.h"
 #include "customerItem.h"
-#include "customers.h"
+#include "customer.h"
 
 #ifndef _SHOP_H_
 #define _SHOP_H_
@@ -13,6 +13,11 @@
 
 // create buy prompt function
 void buyPrompt(nodeCustomer** customers, nodeItem** items, customerItem** customerItems, int* size) {
+	printf("All items:\n");
+	viewAllItemsPrompt(*items);
+	printf("All customers:\n");
+	viewAllCustomersPrompt(*customers);
+
 	int customerId;
 	int itemId;
 	printf("Enter customer id: ");
@@ -72,6 +77,34 @@ void refundPrompt(nodeCustomer** customers, nodeItem** items, customerItem** cus
 	else {
 		printf("Can't refund because purchase date is not in last 14 days");
 	}
+}
+
+void allLevelsShopPrompts(customer** customers, nodeItem** items, customerItem** customerItems, int* customerItemsSize) {
+	system("cls");
+	int choice;
+	do {
+		printf("-----------------\n\n\n\n");
+		printf("1. Buy an item\n");
+		printf("2. Refund an item\n");
+		printf("3. View all sales\n");
+		printf("0. Back\n");
+		printf("Enter your choice: ");
+		scanf("%d", &choice);
+		switch (choice) {
+		case 1:
+			buyPrompt(customers, items, customerItems, customerItemsSize);
+			break;
+		case 2:
+			refundPrompt(customers, items, customerItems, customerItemsSize);
+			break;
+		case 3:
+			viewAllCustomerItemsPrompt(*customerItems, *customerItemsSize);
+			break;
+		default:
+			printf("Invalid choice\n");
+			break;
+		}
+	} while (choice != 0);
 }
 
 #endif

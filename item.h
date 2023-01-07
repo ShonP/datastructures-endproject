@@ -23,6 +23,11 @@ typedef struct nodeItem {
 	struct nodeItem* right;
 } nodeItem;
 
+typedef struct listItem {
+	item data;
+	struct listItem* next;
+} listItem;
+
 // Function prototypes
 nodeItem* initializeItems();
 void addItem(nodeItem** root, item* data);
@@ -31,12 +36,9 @@ void saveTreeItems(struct nodeItem* root, FILE* fp);
 void saveItems(nodeItem* root);
 void freeTreeItems(nodeItem* root);
 void printTreeItems(nodeItem* root);
+listItem* searchByBrandItem(nodeItem* root, char* searchKey);
 nodeItem* searchByIdItem(nodeItem* root, int id);
 nodeItem* searchByPhoneNameItem(nodeItem* root, const char* phoneName);
-nodeItem* searchByBrandItem(nodeItem* root, const char* brand);
-nodeItem* searchByValueItem(nodeItem* root, float price);
-nodeItem* searchByIsNewItem(nodeItem* root, bool isNew);
-nodeItem* searchByDateItem(nodeItem* root, time_t date);
 
 nodeItem* initializeItems() {
 	nodeItem* root = NULL;
@@ -193,68 +195,74 @@ nodeItem* searchByPhoneNameItem(nodeItem* root, const char* phoneName) {
 	}
 }
 
-nodeItem* searchByBrandItem(nodeItem* root, const char* brand) {
+listItem* searchByBrandItem(nodeItem* root, char* searchKey) {
 	if (root == NULL) {
 		return NULL;
 	}
 
-	if (strcmp(root->data.brand, brand) == 0) {
-		return root;
+	listItem* result = searchByBrandItem(root->left, searchKey);
+
+	if (strcmp(root->data.brand, searchKey) == 0) {
+		listItem* newResult = (listItem*)malloc(sizeof(listItem));
+		newResult->data = root->data;
+		newResult->next = result;
+		result = newResult;
 	}
-	else if (strcmp(brand, root->data.brand) < 0) {
-		return searchByBrandItem(root->left, brand);
+
+	listItem* rightResult = searchByBrandItem(root->right, searchKey);
+	if (rightResult != NULL) {
+		listItem* current = result;
+		while (current != NULL && current->next != NULL) {
+			current = current->next;
+		}
+		if (current == NULL) {
+			result = rightResult;
+		}
+		else {
+			current->next = rightResult;
+		}
 	}
-	else {
-		return searchByBrandItem(root->right, brand);
-	}
+
+	return result;
 }
 
-nodeItem* searchByPriceItem(nodeItem* root, float price) {
+listItem* searchByIsNewItem(nodeItem* root, bool isNew) {
 	if (root == NULL) {
 		return NULL;
 	}
 
-	if (root->data.price == price) {
-		return root;
-	}
-	else if (price < root->data.price) {
-		return searchByPriceItem(root->left, price);
-	}
-	else {
-		return searchByPriceItem(root->right, price);
-	}
-}
-
-nodeItem* searchByIsNewItem(nodeItem* root, bool isNew) {
-	if (root == NULL) {
-		return NULL;
-	}
+	listItem* result = searchByIsNewItem(root->left, isNew);
 
 	if (root->data.isNew == isNew) {
-		return root;
+		listItem* newResult = (listItem*)malloc(sizeof(listItem));
+		newResult->data = root->data;
+		newResult->next = result;
+		result = newResult;
 	}
-	else if (isNew < root->data.isNew) {
-		return searchByIsNewItem(root->left, isNew);
+
+	listItem* rightResult = searchByIsNewItem(root->right, isNew);
+	if (rightResult != NULL) {
+		listItem* current = result;
+		while (current != NULL && current->next != NULL) {
+			current = current->next;
+		}
+		if (current == NULL) {
+			result = rightResult;
+		}
+		else {
+			current->next = rightResult;
+		}
 	}
-	else {
-		return searchByIsNewItem(root->right, isNew);
-	}
+
+	return result;
 }
 
-nodeItem* searchByDateItem(nodeItem* root, time_t date) {
-	if (root == NULL) {
-		return NULL;
+int updateItem(nodeItem* root, int id, item* data) {
+	nodeItem* node = searchByIdItem(root, id);
+	if (node != NULL) {
+		node->data = *data;
+		return 1;
 	}
-
-	if (root->data.date == date) {
-		return root;
-	}
-	else if (date < root->data.date) {
-		return searchByDateItem(root->left, date);
-	}
-	else {
-		return searchByDateItem(root->right, date);
-	}
+	return 0;
 }
-
 #endif

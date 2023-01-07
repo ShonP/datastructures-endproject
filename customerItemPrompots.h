@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "customerItem.h"
-#include "items.h"
+#include "item.h"
 
 #ifndef _CUSTOMER_ITEM_PROMPTS_H_
 #define _CUSTOMER_ITEM_PROMPTS_H_
