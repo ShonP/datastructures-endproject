@@ -24,41 +24,14 @@ void prompts(nodeItem** items, nodeCustomer** customers, employee** employees, i
 		scanf("%d", &choice);
 		switch (choice) {
 		case 1:
-			switch (accessLevel) {
-			case 1:
-				level1EmployeePrompts(employees, employeeSize);
-				break;
-			case 2:
-				level2EmployeePrompts(employees, employeeSize);
-				break;
-			case 3:
-				level3EmployeePrompts(employees, employeeSize);
-				break;
-			}
+			employeePrompts(employees, employeeSize, accessLevel);
+			break;
 		case 2:
-			switch (accessLevel) {
-			case 1:
-				level1ItemPrompts(items);
-				break;
-			case 2:
-				level2ItemPrompts(items);
-				break;
-			case 3:
-				level3ItemPrompts(items);
-				break;
-			}
+			itemPrompts(items, accessLevel);
+			break;
 		case 3:
-			switch (accessLevel) {
-			case 1:
-				level1CustomerPrompts(customers);
-				break;
-			case 2:
-				level2CustomerPrompts(customers);
-				break;
-			case 3:
-				level3CustomerPrompts(customers);
-				break;
-			}
+			customerPrompts(customers, accessLevel);
+			break;
 		case 4:
 			allLevelsShopPrompts(customers, items, customerItems, customerItemsSize);
 			break;

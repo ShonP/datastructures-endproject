@@ -40,7 +40,7 @@ int initializeEmployees(employee** employees) {
 		// If the input file does not exist, create an empty array of structs
 		array_size = 1;
 		d_array = malloc(array_size * sizeof(employee));
-		d_array[0] = (employee){ .username = "Admin", .password = "Admin", .fullName = "Manager_System", .accessLevel = 1 };
+		d_array[0] = (employee){ .username = "Admin", .password = "Admin", .fullName = "Manager_System", .accessLevel = 3 };
 		saveEmployees(d_array, array_size);
 	}
 	else {

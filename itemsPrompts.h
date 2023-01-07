@@ -119,7 +119,7 @@ void searchItemByIsNewPrompt(nodeItem* items) {
 	}
 }
 
-void level1ItemPrompts(nodeItem** root) {
+void itemPrompts(nodeItem** root, int accessLevel) {
 	system("cls");
 	int choice;
 	do {
@@ -129,89 +129,12 @@ void level1ItemPrompts(nodeItem** root) {
 		printf("4. Search item by phone name\n");
 		printf("5. Search item by brand\n");
 		printf("6. Search item by isNew\n");
-		printf("0. Back\n");
-		printf("Enter your choice: ");
-		scanf("%d", &choice);
-		switch (choice) {
-		case 1:
-			viewAllItemsPrompt(*root);
-			break;
-		case 2:
-			createItemPrompt(root);
-			break;
-		case 3:
-			searchItemByIdPrompt(*root);
-			break;
-		case 4:
-			searchItemByPhoneNamePrompt(*root);
-			break;
-		case 5:
-			searchItemByBrandPrompt(*root);
-			break;
-		case 6:
-			searchItemByIsNewPrompt(*root);
-			break;
-		case 0:
-			break;
-		default:
-			printf("Invalid choice\n");
-			break;
+		if (accessLevel == 2) {
+			//update employee printf
 		}
-	} while (choice != 0);
-}
-void level2ItemPrompts(nodeItem** root) {
-	system("cls");
-	int choice;
-	do {
-		printf("1. View all items\n");
-		printf("2. Create item\n");
-		printf("3. Search item by id\n");
-		printf("4. Search item by phone name\n");
-		printf("5. Search item by brand\n");
-		printf("6. Search item by isNew\n");
-		//missing update
-		printf("0. Back\n");
-		printf("Enter your choice: ");
-		scanf("%d", &choice);
-		switch (choice) {
-		case 1:
-			viewAllItemsPrompt(*root);
-			break;
-		case 2:
-			createItemPrompt(root);
-			break;
-		case 3:
-			searchItemByIdPrompt(*root);
-			break;
-		case 4:
-			searchItemByPhoneNamePrompt(*root);
-			break;
-		case 5:
-			searchItemByBrandPrompt(*root);
-			break;
-		case 6:
-			searchItemByIsNewPrompt(*root);
-			break;
-		case 0:
-			break;
-		default:
-			printf("Invalid choice\n");
-			break;
+		if (accessLevel == 3) {
+			printf("8. Delete item\n");
 		}
-	} while (choice != 0);
-}
-
-void level3ItemPrompts(nodeItem** root) {
-	system("cls");
-	int choice;
-	do {
-		printf("1. View all items\n");
-		printf("2. Create item\n");
-		printf("3. Search item by id\n");
-		printf("4. Search item by phone name\n");
-		printf("5. Search item by brand\n");
-		printf("6. Search item by isNew\n");
-		printf("7. Delete item\n");
 		printf("0. Back\n");
 		printf("Enter your choice: ");
 		scanf("%d", &choice);
@@ -235,7 +158,20 @@ void level3ItemPrompts(nodeItem** root) {
 			searchItemByIsNewPrompt(*root);
 			break;
 		case 7:
-			deleteItemPrompt(root);
+			if (accessLevel == 2) {
+				//update employee
+			}
+			else {
+				printf("Invalid choice\n");
+			}
+			break;
+		case 8:
+			if (accessLevel == 3) {
+				deleteItemPrompt(root);
+			}
+			else {
+				printf("Invalid choice\n");
+			}
 			break;
 		case 0:
 			break;

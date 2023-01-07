@@ -155,4 +155,45 @@ void level3CustomerPrompts(nodeCustomer** customers) {
 	} while (choice != 0);
 }
 
+
+void customerPrompts(nodeCustomer** customers, int accessLevel) {
+	int choice;
+	do {
+		system("cls");
+		printf("1. View all customers\n");
+		printf("2. Search customer by name\n");
+		printf("3. Create customer\n");
+		if (accessLevel == 3) {
+			printf("4. Delete customer\n");
+		}
+		printf("0. Back\n");
+		printf("Enter choice: ");
+		scanf("%d", &choice);
+		switch (choice) {
+		case 1:
+			viewAllCustomersPrompt(*customers);
+			break;
+		case 2:
+			searchCustomerByNamePrompt(*customers);
+			break;
+		case 3:
+			createCustomerPrompt(customers);
+			break;
+		case 4:
+			if (accessLevel == 3) {
+				deleteCustomerPrompt(customers);
+			}
+			else {
+				printf("Invalid choice\n");
+			}
+			break;
+		case 0:
+			break;
+		default:
+			printf("Invalid choice\n");
+			break;
+		}
+	} while (choice != 0);
+}
+
 #endif
