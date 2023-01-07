@@ -25,7 +25,7 @@ typedef struct nodeItem {
 
 // Function prototypes
 nodeItem* initializeItems();
-void addItem(nodeItem** root, item data);
+void addItem(nodeItem** root, item* data);
 void removeItem(nodeItem** root, int id);
 void saveTreeItems(struct nodeItem* root, FILE* fp);
 void saveItems(nodeItem* root);
@@ -56,9 +56,13 @@ nodeItem* initializeItems() {
 	else {
 		printf("Loading existing items file\n");
 		// Read data from file and addItem it to the tree
-		item data;
-		while (fscanf(fp, "%d,%31[^,],%31[^,],%f,%d,%ld\n", &data.id, data.phoneName, data.brand, &data.price, &data.isNew, &data.date) == 6) {
-			addItem(&root, data);
+		while (1) {
+			item data;
+			int result = fread(&data, sizeof(item), 1, fp);
+			if (result == 0) {
+				break;
+			}
+			addItem(&root, &data);
 		}
 	}
 
@@ -123,8 +127,8 @@ void saveTreeItems(struct nodeItem* root, FILE* fp) {
 	if (root == NULL) {
 		return;
 	}
+	fwrite(&root->data, sizeof(item), 1, fp);
 
-	fprintf(fp, "%d,%s,%s,%f,%d,%ld\n", root->data.id, root->data.phoneName, root->data.brand, root->data.price, root->data.isNew, root->data.date);
 	saveTreeItems(root->left, fp);
 	saveTreeItems(root->right, fp);
 }

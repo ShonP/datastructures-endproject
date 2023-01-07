@@ -24,8 +24,8 @@ void createItemPrompt(nodeItem** items) {
 	printf("Enter item isNew: ");
 	scanf("%d", &data->isNew);
 	data->date = time(NULL);
-	
-	
+
+
 	addItem(items, data);
 
 	char log[100];
@@ -144,5 +144,54 @@ void searchItemByDatePrompt(nodeItem* items) {
 	}
 }
 
+
+void level1ItemPrompts(nodeItem** root) {
+	system("cls");
+	int choice;
+	do {
+		printf("1. View all items\n");
+		printf("2. Create item\n");
+		printf("3. Search item by id\n");
+		printf("4. Search item by phone name\n");
+		printf("5. Search item by brand\n");
+		printf("6. Search item by price\n");
+		printf("7. Search item by isNew\n");
+		printf("8. Search item by date\n");
+		printf("0. Exit\n");
+		printf("Enter your choice: ");
+		scanf("%d", &choice);
+		switch (choice) {
+		case 1:
+			viewAllItemsPrompt(*root);
+			break;
+		case 2:
+			createItemPrompt(root);
+			break;
+		case 3:
+			searchItemByIdPrompt(*root);
+			break;
+		case 4:
+			searchItemByPhoneNamePrompt(*root);
+			break;
+		case 5:
+			searchItemByBrandPrompt(*root);
+			break;
+		case 6:
+			searchItemByPricePrompt(*root);
+			break;
+		case 7:
+			searchItemByIsNewPrompt(*root);
+			break;
+		case 8:
+			searchItemByDatePrompt(*root);
+			break;
+		case 0:
+			break;
+		default:
+			printf("Invalid choice\n");
+			break;
+		}
+	} while (choice != 0);
+}
 
 #endif

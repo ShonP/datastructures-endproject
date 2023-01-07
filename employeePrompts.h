@@ -65,6 +65,25 @@ void searchEmployeeByFullNamePrompt(employee* employees, int numEmployees) {
 	}
 }
 
+//searchEmployeeByUsernamePrompt
+void searchEmployeeByUsernamePrompt(employee* employees, int numEmployees) {
+	system("cls");
+	char username[32];
+	printf("Enter username: ");
+	scanf("%s", username);
+	employee* foundEmployee = searchEmployeeByUsername(username, numEmployees, employees);
+	if (foundEmployee == NULL) {
+		printf("Employee not found\n");
+	}
+	else {
+		printf("Employee found\n");
+		printf("Username: %s\n", foundEmployee->username);
+		printf("Password: %s\n", foundEmployee->password);
+		printf("Full name: %s\n", foundEmployee->fullName);
+		printf("Access level: %d\n", foundEmployee->accessLevel);
+	}
+}
+
 // function to view all employees
 void viewAllEmployeesPrompt(const employee* employees, int employeesSize) {
 	system("cls");
@@ -75,5 +94,39 @@ void viewAllEmployeesPrompt(const employee* employees, int employeesSize) {
 		printf("Access level: %d\n", employees[i].accessLevel);
 	}
 }
+
+
+// create all view prompts prompt
+void level1EmployeePrompts(const employee** employees, int* employeesSize) {
+	system("cls");
+	int choice = 0;
+	while (choice != 4) {
+		printf("-----------------\n\n\n\n");
+		printf("1. View all employees\n");
+		printf("2. Search employee by full name\n");
+		printf("3. Search employee by username\n");
+		printf("4. Back\n");
+		printf("Enter your choice: ");
+		scanf("%d", &choice);
+		switch (choice) {
+		case 1:
+			viewAllEmployeesPrompt(*employees, *employeesSize);
+			break;
+		case 2:
+			searchEmployeeByFullNamePrompt(*employees, *employeesSize);
+			break;
+		case 3:
+			searchEmployeeByUsernamePrompt(*employees, *employeesSize);
+			break;
+		case 4:
+			return;
+		default:
+			printf("Invalid choice\n");
+			break;
+		}
+	}
+
+}
+
 
 #endif

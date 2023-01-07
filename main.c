@@ -13,6 +13,7 @@
 
 // create void function that include all employee prompts
 void employeePrompts(employee** employees, int* employeeSize) {
+	system("cls");
 	int choice = 0;
 	while (choice != 5) {
 		printf("-----------------\n\n\n\n");
@@ -20,7 +21,7 @@ void employeePrompts(employee** employees, int* employeeSize) {
 		printf("2. Remove employee\n");
 		printf("3. Search employee by full name\n");
 		printf("4. View all employees\n");
-		printf("5. Exit\n");
+		printf("5. Back\n");
 		printf("Enter choice: ");
 		scanf("%d", &choice);
 		switch (choice) {
@@ -37,7 +38,6 @@ void employeePrompts(employee** employees, int* employeeSize) {
 			viewAllEmployeesPrompt(*employees, *employeeSize);
 			break;
 		case 5:
-			exit(0);
 			break;
 		default:
 			printf("Invalid choice\n");
@@ -72,7 +72,6 @@ void itemPrompts(nodeItem** items) {
 			viewAllItemsPrompt(*items);
 			break;
 		case 5:
-			exit(0);
 			break;
 		default:
 			printf("Invalid choice\n");
@@ -116,6 +115,33 @@ void customerPrompts(nodeCustomer** customers) {
 	}
 }
 
+// create all view prompts prompt
+void level1Prompts(employee** employees, int* employeeSize, nodeItem** items) {
+	system("cls");
+	int choice = 0;
+	while (choice != 5) {
+		printf("-----------------\n\n\n\n");
+		printf("1. View employee menu\n");
+		printf("2. View item menu\n");
+		printf("3. View customer menu\n");
+		printf("4. Exit\n");
+		printf("Enter choice: ");
+		scanf("%d", &choice);
+		switch (choice) {
+		case 1:
+			level1EmployeePrompts(employees, employeeSize);
+			break;
+		case 2:
+			level1ItemPrompts(items);
+		case 4:
+			exit(0);
+			break;
+		}
+
+
+	}
+}
+
 
 int main(int argc, char* argv[]) {
 	initializeLogs();
@@ -128,11 +154,15 @@ int main(int argc, char* argv[]) {
 	customerItem* customerItems;
 
 	int customerItemsSize = initializeCustomerItems(&customerItems);
+	level1Prompts(&employees, &employeeSize, &items);
+	//createItemPrompt(&items);
 	//itemPrompts(&items);
 	//customerPrompts(&customers);
 	// buy item using buyPrompt
-	viewAllCustomerItemsPrompt(customerItems, customerItemsSize);
-	refundPrompt(&customers, &items, &customerItems, &customerItemsSize);
-
+	//viewAllCustomersPrompt(customers);
+	//viewAllItemsPrompt(items);
+	//viewAllCustomerItemsPrompt(customerItems, customerItemsSize);
+	//viewAllItemsPrompt(items);
+	//buyPrompt(&customers, &items, &customerItems, &customerItemsSize);
 	return 0;
 }

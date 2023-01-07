@@ -198,6 +198,15 @@ employee* searchEmployeeByFullName(const char* fullName, int employeesSize, cons
 	return NULL;
 }
 
+// function to search employee by username
+employee* searchEmployeeByUsername(const char* username, int employeesSize, const employee* employees) {
+	for (int i = 0; i < employeesSize; i++) {
+		if (strcmp(username, employees[i].username) == 0) {
+			return &employees[i];
+		}
+	}
+	return NULL;
+}
 
 
 #endif
