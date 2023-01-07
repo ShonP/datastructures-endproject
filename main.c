@@ -7,6 +7,9 @@
 #include "itemsPrompts.h"
 #include "customers.h"
 #include "customersPrompts.h"
+#include "customerItemPrompots.h"
+#include "customerItem.h"
+#include "shopPrompts.h"
 
 // create void function that include all employee prompts
 void employeePrompts(employee** employees, int* employeeSize) {
@@ -113,6 +116,7 @@ void customerPrompts(nodeCustomer** customers) {
 	}
 }
 
+
 int main(int argc, char* argv[]) {
 	initializeLogs();
 	employee* employees;
@@ -121,8 +125,14 @@ int main(int argc, char* argv[]) {
 	nodeItem* items = initializeItems();
 	nodeCustomer* customers;
 	initializeCustomers(&customers);
-	itemPrompts(&items);
+	customerItem* customerItems;
+
+	int customerItemsSize = initializeCustomerItems(&customerItems);
+	//itemPrompts(&items);
 	//customerPrompts(&customers);
+	// buy item using buyPrompt
+	viewAllCustomerItemsPrompt(customerItems, customerItemsSize);
+	refundPrompt(&customers, &items, &customerItems, &customerItemsSize);
 
 	return 0;
 }

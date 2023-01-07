@@ -16,6 +16,13 @@ typedef struct customerItem {
 } customerItem;
 
 
+// view all customer items function
+void viewAllCustomerItems(customerItem* customerItems, int size) {
+	for (int i = 0; i < size; i++) {
+		printf("Id: %d, CustomerId: %d, ItemId: %d, PurchasedDate: %s\n", customerItems[i].generatedId, customerItems[i].customerId, customerItems[i].itemId, ctime(&customerItems[i].purchasedDate));
+	}
+}
+
 // create addCustomerItem with array of customerItems and size
 void addCustomerItem(customerItem** customerItems, int* size, int customerId, int itemId) {
 	customerItem* newCustomerItem = (customerItem*)malloc(sizeof(customerItem));
@@ -42,6 +49,31 @@ void removeCustomerItem(customerItem** customerItems, int* size, int customerId,
 	}
 }
 
+void saveCustomerItems(const customerItem* customerItems, int numCustomerItems) {
+	FILE* fp = fopen("customerItem.bin", "wb");
+	if (fp == NULL) {
+		perror("Error opening file");
+		exit(EXIT_FAILURE);
+	}
+
+	fwrite(&numCustomerItems, sizeof(int), 1, fp);
+	for (int i = 0; i < numCustomerItems; i++) {
+		fwrite(&customerItems[i], sizeof(customerItem), 1, fp);
+	}
+
+	fclose(fp);
+}
+
+// create searchCustomerItem function by customerId and itemId
+customerItem* searchCustomerItemByCustomerIdAndItemId(customerItem* customerItems, int size, int customerId, int itemId) {
+	for (int i = 0; i < size; i++) {
+		if (customerItems[i].customerId == customerId && customerItems[i].itemId == itemId) {
+			return &customerItems[i];
+		}
+	}
+	return NULL;
+}
+
 int initializeCustomerItems(customerItem** customerItems) {
 	FILE* infile = fopen("customerItem.bin", "rb");
 	int i;
@@ -51,7 +83,7 @@ int initializeCustomerItems(customerItem** customerItems) {
 	if (!infile) {
 		printf("Initialize new file customerItem\n");
 		// If the input file does not exist, create an empty array of structs
-		array_size = 1;
+		array_size = 0;
 		d_array = malloc(array_size * sizeof(customerItem));
 	}
 	else {
@@ -68,6 +100,16 @@ int initializeCustomerItems(customerItem** customerItems) {
 	return array_size;
 }
 
-
-
+// isPurchaseDateInLast14Days
+int isPurchaseDateInLast14Days(customerItem* customerItems, int size, int customerId) {
+	int count = 0;
+	for (int i = 0; i < size; i++) {
+		if (customerItems[i].customerId == customerId) {
+			if (customerItems[i].purchasedDate > time(NULL) - 14 * 24 * 60 * 60) {
+				count++;
+			}
+		}
+	}
+	return count;
+}
 #endif

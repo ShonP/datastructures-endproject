@@ -131,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="customerItem.h" />
+    <ClInclude Include="customerItemPrompots.h" />
     <ClInclude Include="customers.h" />
     <ClInclude Include="customersPrompts.h" />
     <ClInclude Include="employee.h" />
@@ -138,6 +139,7 @@
     <ClInclude Include="items.h" />
     <ClInclude Include="itemsPrompts.h" />
     <ClInclude Include="logs.h" />
+    <ClInclude Include="shopPrompts.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
