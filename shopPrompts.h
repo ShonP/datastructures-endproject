@@ -81,7 +81,7 @@ void refundPrompt(nodeCustomer** customers, nodeItem** items, customerItem** cus
 	}
 }
 
-void allLevelsShopPrompts(nodeCustomer** customers, nodeItem** items, customerItem** customerItems, int* customerItemsSize) {
+void shopPrompts(nodeCustomer** customers, nodeItem** items, customerItem** customerItems, int* customerItemsSize) {
 	system("cls");
 	int choice;
 	do {

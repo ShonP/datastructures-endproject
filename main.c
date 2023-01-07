@@ -33,7 +33,7 @@ void prompts(nodeItem** items, nodeCustomer** customers, employee** employees, i
 			customerPrompts(customers, accessLevel);
 			break;
 		case 4:
-			allLevelsShopPrompts(customers, items, customerItems, customerItemsSize);
+			shopPrompts(customers, items, customerItems, customerItemsSize);
 			break;
 		case 0:
 			exit(0);
