@@ -44,6 +44,7 @@ void buyPrompt(nodeCustomer** customers, nodeItem** items, customerItem** custom
 
 // create refund function prompt and only refund if purchaseDate in last 14 days
 void refundPrompt(nodeCustomer** customers, nodeItem** items, customerItem** customerItems, int* size) {
+	viewAllCustomerItemsPrompt(*customerItems, *size, *items, *customers);
 	int customerId;
 	int itemId;
 	printf("Enter customer id: ");
@@ -73,13 +74,14 @@ void refundPrompt(nodeCustomer** customers, nodeItem** items, customerItem** cus
 	if (isPurchaseDateInLast14Days(*customerItems, *size, customerId)) {
 		removeCustomerItem(customerItems, size, customerId, itemId);
 		saveCustomerItems(*customerItems, *size);
+		printf("Refund successfully!");
 	}
 	else {
 		printf("Can't refund because purchase date is not in last 14 days");
 	}
 }
 
-void allLevelsShopPrompts(customer** customers, nodeItem** items, customerItem** customerItems, int* customerItemsSize) {
+void allLevelsShopPrompts(nodeCustomer** customers, nodeItem** items, customerItem** customerItems, int* customerItemsSize) {
 	system("cls");
 	int choice;
 	do {
@@ -98,7 +100,7 @@ void allLevelsShopPrompts(customer** customers, nodeItem** items, customerItem**
 			refundPrompt(customers, items, customerItems, customerItemsSize);
 			break;
 		case 3:
-			viewAllCustomerItemsPrompt(*customerItems, *customerItemsSize);
+			viewAllCustomerItemsPrompt(*customerItems, *customerItemsSize, *items, *customers);
 			break;
 		default:
 			printf("Invalid choice\n");

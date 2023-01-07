@@ -21,8 +21,8 @@ void addCustomerItemPrompt(customerItem** customerItems, int* size) {
 }
 
 // create view all customer items prompt function
-void viewAllCustomerItemsPrompt(customerItem* customerItems, int size) {
-	viewAllCustomerItems(customerItems, size);
+void viewAllCustomerItemsPrompt(customerItem* customerItems, int size, item* root, customer* customers) {
+	viewAllCustomerItems(customerItems, size, root, customers);
 }
 
 #endif

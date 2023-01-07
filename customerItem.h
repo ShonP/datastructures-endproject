@@ -15,14 +15,19 @@ typedef struct customerItem {
 	time_t purchasedDate;
 } customerItem;
 
-
-// view all customer items function
-void viewAllCustomerItems(customerItem* customerItems, int size) {
+// view all customer items function with item by itemid
+void viewAllCustomerItems(customerItem* customerItems, int size, nodeItem* root, nodeCustomer* customers) {
+	printf("-------------------------------------------------\n");
 	for (int i = 0; i < size; i++) {
-		printf("Id: %d, CustomerId: %d, ItemId: %d, PurchasedDate: %s\n", customerItems[i].generatedId, customerItems[i].customerId, customerItems[i].itemId, ctime(&customerItems[i].purchasedDate));
-	}
-}
+		nodeItem* item = searchByIdItem(root, customerItems[i].itemId);
+		printItem(&item->data);
+		customer* customer = searchCustomerById(customers, customerItems[i].customerId);
+		printCustomer(customer);
+		printf("Purchased Date: %s\n", ctime(&customerItems[i].purchasedDate));
 
+	}
+	printf("-------------------------------------------------\n");
+}
 // create addCustomerItem with array of customerItems and size
 void addCustomerItem(customerItem** customerItems, int* size, int customerId, int itemId) {
 	customerItem* newCustomerItem = (customerItem*)malloc(sizeof(customerItem));

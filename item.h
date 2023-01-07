@@ -40,6 +40,17 @@ listItem* searchByBrandItem(nodeItem* root, char* searchKey);
 nodeItem* searchByIdItem(nodeItem* root, int id);
 nodeItem* searchByPhoneNameItem(nodeItem* root, const char* phoneName);
 
+// create printItem function
+void printItem(item* data) {
+	printf("Item Id: %d\n", data->id);
+	printf("Phone name: %s\n", data->phoneName);
+	printf("Brand: %s\n", data->brand);
+	printf("Price: %.2f\n", data->price);
+	printf("Is new: %d\n", data->isNew);
+	printf("In store since: %s", ctime(&data->date));
+}
+
+
 nodeItem* initializeItems() {
 	nodeItem* root = NULL;
 
