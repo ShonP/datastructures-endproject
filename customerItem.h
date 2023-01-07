@@ -12,6 +12,7 @@ typedef struct customerItem {
 	int generatedId;
 	int customerId;
 	int itemId;
+	time_t purchasedDate;
 } customerItem;
 
 
@@ -21,6 +22,7 @@ void addCustomerItem(customerItem** customerItems, int* size, int customerId, in
 	newCustomerItem->generatedId = *size + 1;
 	newCustomerItem->customerId = customerId;
 	newCustomerItem->itemId = itemId;
+	newCustomerItem->purchasedDate = time(NULL);
 
 	(*size)++;
 	*customerItems = (customerItem*)realloc(*customerItems, *size * sizeof(customerItem));
