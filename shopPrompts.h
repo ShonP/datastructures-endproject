@@ -86,21 +86,21 @@ void allLevelsShopPrompts(nodeCustomer** customers, nodeItem** items, customerIt
 	int choice;
 	do {
 		printf("-----------------\n\n\n\n");
-		printf("1. Buy an item\n");
-		printf("2. Refund an item\n");
-		printf("3. View all sales\n");
+		printf("1. View all sales\n");
+		printf("2. Buy an item\n");
+		printf("3. Refund an item\n");
 		printf("0. Back\n");
 		printf("Enter your choice: ");
 		scanf("%d", &choice);
 		switch (choice) {
 		case 1:
-			buyPrompt(customers, items, customerItems, customerItemsSize);
+			viewAllCustomerItemsPrompt(*customerItems, *customerItemsSize, *items, *customers);
 			break;
 		case 2:
-			refundPrompt(customers, items, customerItems, customerItemsSize);
+			buyPrompt(customers, items, customerItems, customerItemsSize);
 			break;
 		case 3:
-			viewAllCustomerItemsPrompt(*customerItems, *customerItemsSize, *items, *customers);
+			refundPrompt(customers, items, customerItems, customerItemsSize);
 			break;
 		default:
 			printf("Invalid choice\n");
