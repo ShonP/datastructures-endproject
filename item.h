@@ -36,9 +36,58 @@ void saveTreeItems(struct nodeItem* root, FILE* fp);
 void saveItems(nodeItem* root);
 void freeTreeItems(nodeItem* root);
 void printTreeItems(nodeItem* root);
-listItem* searchByBrandItem(nodeItem* root, char* searchKey);
+listItem* searchByBrandItems(nodeItem* root, char* searchKey);
 nodeItem* searchByIdItem(nodeItem* root, int id);
 nodeItem* searchByPhoneNameItem(nodeItem* root, const char* phoneName);
+
+listItem* searchByDateItems(nodeItem* root, time_t date, bool isAbove) {
+	if (root == NULL) {
+		return NULL;
+	}
+
+	listItem* list = NULL;
+	if (isAbove) {
+		if (root->data.date > date) {
+			listItem* result = searchByDateItems(root->left, date, isAbove);
+			if (result != NULL) {
+				list = result;
+			}
+			else {
+				list = malloc(sizeof(listItem));
+				list->data = root->data;
+				list->next = NULL;
+			}
+		}
+		else {
+			list = searchByDateItems(root->right, date, isAbove);
+		}
+	}
+	else {
+		if (root->data.date < date) {
+			listItem* result = searchByDateItems(root->right, date, isAbove);
+			if (result != NULL) {
+				list = result;
+			}
+			else {
+				list = malloc(sizeof(listItem));
+				list->data = root->data;
+				list->next = NULL;
+			}
+		}
+		else {
+			list = searchByDateItems(root->left, date, isAbove);
+		}
+	}
+
+	if (list != NULL) {
+		listItem* node = malloc(sizeof(listItem));
+		node->data = root->data;
+		node->next = list;
+		list = node;
+	}
+
+	return list;
+}
 
 // create printItem function
 void printItem(item* data) {
@@ -49,7 +98,6 @@ void printItem(item* data) {
 	printf("Is new: %d\n", data->isNew);
 	printf("In store since: %s", ctime(&data->date));
 }
-
 
 nodeItem* initializeItems() {
 	nodeItem* root = NULL;
@@ -206,12 +254,12 @@ nodeItem* searchByPhoneNameItem(nodeItem* root, const char* phoneName) {
 	}
 }
 
-listItem* searchByBrandItem(nodeItem* root, char* searchKey) {
+listItem* searchByBrandItems(nodeItem* root, char* searchKey) {
 	if (root == NULL) {
 		return NULL;
 	}
 
-	listItem* result = searchByBrandItem(root->left, searchKey);
+	listItem* result = searchByBrandItems(root->left, searchKey);
 
 	if (strcmp(root->data.brand, searchKey) == 0) {
 		listItem* newResult = (listItem*)malloc(sizeof(listItem));
@@ -220,7 +268,7 @@ listItem* searchByBrandItem(nodeItem* root, char* searchKey) {
 		result = newResult;
 	}
 
-	listItem* rightResult = searchByBrandItem(root->right, searchKey);
+	listItem* rightResult = searchByBrandItems(root->right, searchKey);
 	if (rightResult != NULL) {
 		listItem* current = result;
 		while (current != NULL && current->next != NULL) {
