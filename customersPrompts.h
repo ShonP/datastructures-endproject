@@ -158,8 +158,8 @@ void level3CustomerPrompts(nodeCustomer** customers) {
 
 void customerPrompts(nodeCustomer** customers, int accessLevel) {
 	int choice;
+	system("cls");
 	do {
-		system("cls");
 		printf("1. View all customers\n");
 		printf("2. Search customer by name\n");
 		printf("3. Create customer\n");

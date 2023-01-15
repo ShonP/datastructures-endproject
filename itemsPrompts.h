@@ -66,7 +66,7 @@ void searchItemByIdPrompt(nodeItem* items) {
 		printf("Item not found\n");
 	}
 	else {
-		printf("Item found: %d, %s, %s, %f, %d, %ld\n", result->data.id, result->data.phoneName, result->data.brand, result->data.price, result->data.isNew, result->data.date);
+		printItem(&result->data);
 	}
 }
 
@@ -81,7 +81,7 @@ void searchItemByPhoneNamePrompt(nodeItem* items) {
 		printf("Item not found\n");
 	}
 	else {
-		printf("Item found: %d, %s, %s, %f, %d, %ld\n", result->data.id, result->data.phoneName, result->data.brand, result->data.price, result->data.isNew, result->data.date);
+		printItem(&result->data);
 	}
 }
 
@@ -97,7 +97,7 @@ void searchItemByBrandPrompt(nodeItem* items) {
 	}
 	else {
 		while (result != NULL) {
-			printf("Item found: %d, %s, %s, %f, %d, %ld\n", result->data.id, result->data.phoneName, result->data.brand, result->data.price, result->data.isNew, result->data.date);
+			printItem(&result->data);
 			result = result->next;
 		}
 	}
@@ -113,7 +113,7 @@ void searchItemByIsNewPrompt(nodeItem* items) {
 	}
 	else {
 		while (result != NULL) {
-			printf("Item found: %d, %s, %s, %f, %d, %ld\n", result->data.id, result->data.phoneName, result->data.brand, result->data.price, result->data.isNew, result->data.date);
+			printItem(&result->data);
 			result = result->next;
 		}
 	}
@@ -162,7 +162,7 @@ void searchItemByDatePrompt(nodeItem* items) {
 	int isAbove;
 	printf("Enter isAbove: ");
 	scanf("%d", &isAbove);
-	
+
 	struct tm tm;
 	memset(&tm, 0, sizeof(struct tm));
 	tm.tm_year = year - 1900;
@@ -176,7 +176,7 @@ void searchItemByDatePrompt(nodeItem* items) {
 	}
 	else {
 		while (result != NULL) {
-			printf("Item found: %d, %s, %s, %f, %d, %ld\n", result->data.id, result->data.phoneName, result->data.brand, result->data.price, result->data.isNew, result->data.date);
+			printItem(&result->data);
 			result = result->next;
 		}
 	}
@@ -186,6 +186,7 @@ void itemPrompts(nodeItem** root, int accessLevel) {
 	system("cls");
 	int choice;
 	do {
+		printf("-----------------\n\n\n\n");
 		printf("1. View all items\n");
 		printf("2. Create item\n");
 		printf("3. Search item by id\n");
@@ -193,7 +194,7 @@ void itemPrompts(nodeItem** root, int accessLevel) {
 		printf("5. Search item by brand\n");
 		printf("6. Search item by isNew\n");
 		printf("7. Search item by created date\n");
-		if (accessLevel == 2) {
+		if (accessLevel == 2 || accessLevel == 3) {
 			printf("8. Update item\n");
 		}
 		if (accessLevel == 3) {
@@ -225,7 +226,7 @@ void itemPrompts(nodeItem** root, int accessLevel) {
 			searchItemByDatePrompt(*root);
 			break;
 		case 8:
-			if (accessLevel == 2) {
+			if (accessLevel == 2 || accessLevel == 3) {
 				updateItemPrompt(root);
 			}
 			else {

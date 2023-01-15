@@ -208,5 +208,14 @@ employee* searchEmployeeByUsername(const char* username, int employeesSize, cons
 	return NULL;
 }
 
+//print employee
+void printEmployee(const employee* employee) {
+	printf("----------------\n");
+	printf("Username: %s\n", employee->username);
+	printf("Full name: %s\n", employee->fullName);
+	printf("Access level: %d\n", employee->accessLevel);
+	printf("Password: %s\n", employee->password);
+}
+
 
 #endif

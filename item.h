@@ -38,7 +38,6 @@ void freeTreeItems(nodeItem* root);
 void printTreeItems(nodeItem* root);
 listItem* searchByBrandItems(nodeItem* root, char* searchKey);
 nodeItem* searchByIdItem(nodeItem* root, int id);
-nodeItem* searchByPhoneNameItem(nodeItem* root, const char* phoneName);
 
 listItem* searchByDateItems(nodeItem* root, time_t date, bool isAbove) {
 	if (root == NULL) {
@@ -91,10 +90,11 @@ listItem* searchByDateItems(nodeItem* root, time_t date, bool isAbove) {
 
 // create printItem function
 void printItem(item* data) {
+	printf("------------\n");
 	printf("Item Id: %d\n", data->id);
 	printf("Phone name: %s\n", data->phoneName);
 	printf("Brand: %s\n", data->brand);
-	printf("Price: %.2f\n", data->price);
+	printf("Price: %g\n", data->price);
 	printf("Is new: %d\n", data->isNew);
 	printf("In store since: %s", ctime(&data->date));
 }
@@ -217,7 +217,7 @@ void freeTreeItems(nodeItem* root) {
 void printTreeItems(nodeItem* root) {
 	if (root != NULL) {
 		printTreeItems(root->left);
-		printf("%d,%s,%s,%f,%d,%s\n", root->data.id, root->data.phoneName, root->data.brand, root->data.price, root->data.isNew, ctime(&root->data.date));
+		printItem(&root->data);
 		printTreeItems(root->right);
 	}
 }
@@ -238,20 +238,35 @@ nodeItem* searchByIdItem(nodeItem* root, int id) {
 	}
 }
 
-nodeItem* searchByPhoneNameItem(nodeItem* root, const char* phoneName) {
+listItem* searchByPhoneNameItem(nodeItem* root, const char* phoneName) {
 	if (root == NULL) {
 		return NULL;
 	}
 
+	listItem* result = searchByPhoneNameItem(root->left, phoneName);
+
 	if (strcmp(root->data.phoneName, phoneName) == 0) {
-		return root;
+		listItem* newResult = (listItem*)malloc(sizeof(listItem));
+		newResult->data = root->data;
+		newResult->next = result;
+		result = newResult;
 	}
-	else if (strcmp(phoneName, root->data.phoneName) < 0) {
-		return searchByPhoneNameItem(root->left, phoneName);
+
+	listItem* rightResult = searchByPhoneNameItem(root->right, phoneName);
+	if (rightResult != NULL) {
+		listItem* current = result;
+		while (current != NULL && current->next != NULL) {
+			current = current->next;
+		}
+		if (current == NULL) {
+			result = rightResult;
+		}
+		else {
+			current->next = rightResult;
+		}
 	}
-	else {
-		return searchByPhoneNameItem(root->right, phoneName);
-	}
+
+	return result;
 }
 
 listItem* searchByBrandItems(nodeItem* root, char* searchKey) {

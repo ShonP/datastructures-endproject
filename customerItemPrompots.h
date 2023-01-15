@@ -22,6 +22,8 @@ void addCustomerItemPrompt(customerItem** customerItems, int* size) {
 
 // create view all customer items prompt function
 void viewAllCustomerItemsPrompt(customerItem* customerItems, int size, item* root, customer* customers) {
+	system("cls");
+	
 	viewAllCustomerItems(customerItems, size, root, customers);
 }
 

@@ -13,6 +13,7 @@
 
 // create buy prompt function
 void buyPrompt(nodeCustomer** customers, nodeItem** items, customerItem** customerItems, int* size) {
+	system("cls");
 	printf("All items:\n");
 	viewAllItemsPrompt(*items);
 	printf("All customers:\n");
@@ -22,7 +23,11 @@ void buyPrompt(nodeCustomer** customers, nodeItem** items, customerItem** custom
 	int itemId;
 	printf("Enter customer id: ");
 	scanf("%d", &customerId);
-
+	int numberOfItemsBought = getNumberOfItemsOfCustomer(*customerItems, *size, customerId);
+	if (numberOfItemsBought >= 3) {
+		printf("Customer has already bought 3 items\n");
+		return;
+	}
 	// search customer by id
 	nodeCustomer* customer = searchCustomerById(*customers, customerId);
 	if (customer == NULL) {
@@ -44,6 +49,8 @@ void buyPrompt(nodeCustomer** customers, nodeItem** items, customerItem** custom
 
 // create refund function prompt and only refund if purchaseDate in last 14 days
 void refundPrompt(nodeCustomer** customers, nodeItem** items, customerItem** customerItems, int* size) {
+	system("cls");
+
 	viewAllCustomerItemsPrompt(*customerItems, *size, *items, *customers);
 	int customerId;
 	int itemId;
@@ -74,10 +81,10 @@ void refundPrompt(nodeCustomer** customers, nodeItem** items, customerItem** cus
 	if (isPurchaseDateInLast14Days(*customerItems, *size, customerId)) {
 		removeCustomerItem(customerItems, size, customerId, itemId);
 		saveCustomerItems(*customerItems, *size);
-		printf("Refund successfully!");
+		printf("Refund successfully!\n");
 	}
 	else {
-		printf("Can't refund because purchase date is not in last 14 days");
+		printf("Can't refund because purchase date is not in last 14 days\n");
 	}
 }
 
@@ -87,7 +94,7 @@ void shopPrompts(nodeCustomer** customers, nodeItem** items, customerItem** cust
 	do {
 		printf("-----------------\n\n\n\n");
 		printf("1. View all sales\n");
-		printf("2. Buy an item\n");
+		printf("2. Sell an item\n");
 		printf("3. Refund an item\n");
 		printf("0. Back\n");
 		printf("Enter your choice: ");

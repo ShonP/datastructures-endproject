@@ -58,10 +58,7 @@ void searchEmployeeByFullNamePrompt(employee* employees, int numEmployees) {
 	}
 	else {
 		printf("Employee found\n");
-		printf("Username: %s\n", foundEmployee->username);
-		printf("Password: %s\n", foundEmployee->password);
-		printf("Full name: %s\n", foundEmployee->fullName);
-		printf("Access level: %d\n", foundEmployee->accessLevel);
+		printEmployee(foundEmployee);
 	}
 }
 
@@ -77,10 +74,7 @@ void searchEmployeeByUsernamePrompt(employee* employees, int numEmployees) {
 	}
 	else {
 		printf("Employee found\n");
-		printf("Username: %s\n", foundEmployee->username);
-		printf("Password: %s\n", foundEmployee->password);
-		printf("Full name: %s\n", foundEmployee->fullName);
-		printf("Access level: %d\n", foundEmployee->accessLevel);
+		printEmployee(foundEmployee);
 	}
 }
 
@@ -89,9 +83,7 @@ void viewAllEmployeesPrompt(const employee* employees, int employeesSize) {
 	system("cls");
 	printf("All employees:\n");
 	for (int i = 0; i < employeesSize; i++) {
-		printf("Username: %s\n", employees[i].username);
-		printf("Fullname: %s\n", employees[i].fullName);
-		printf("Access level: %d\n", employees[i].accessLevel);
+		printEmployee(&employees[i]);
 	}
 }
 
@@ -102,12 +94,11 @@ void employeePrompts(const employee** employees, int* employeesSize, int accessL
 	system("cls");
 	int choice;
 	do {
-		printf("%d\n\n\n", accessLevel);
 		printf("-----------------\n\n\n\n");
 		printf("1. View all employees\n");
 		printf("2. Search employee by full name\n");
 		printf("3. Search employee by username\n");
-		if (accessLevel == 2) {
+		if (accessLevel == 2 || accessLevel == 3) {
 			printf("4. Create employee\n");
 		}
 		if (accessLevel == 3) {

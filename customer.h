@@ -146,6 +146,7 @@ customer* searchCustomerByDate(nodeCustomer* customers, time_t date) {
 
 // create print function
 void printCustomer(customer* data) {
+	printf("------------\n");
 	printf("Customer ID: %d\n", data->id);
 	printf("Customer Name: %s\n", data->name);
 	printf("Customer Address: %s\n", data->address);

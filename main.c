@@ -50,12 +50,12 @@ int main(int argc, char* argv[]) {
 	initializeLogs();
 	employee* employees;
 	int employeeSize = initializeEmployees(&employees);
-	employee* loggedEmployee = loginPrompt(employeeSize, employees, 1);
+	employee* loggedEmployee = loginPrompt(employeeSize, employees, 0);
 	nodeItem* items = initializeItems();
 	nodeCustomer* customers;
 	initializeCustomers(&customers);
 	customerItem* customerItems;
-
+	saveCustomers(customers);
 	int customerItemsSize = initializeCustomerItems(&customerItems);
 	prompts(&items, &customers, &employees, &employeeSize, &customerItems, &customerItemsSize, loggedEmployee->accessLevel);
 	return 0;

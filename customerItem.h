@@ -15,18 +15,22 @@ typedef struct customerItem {
 	time_t purchasedDate;
 } customerItem;
 
+typedef struct listCustomerItem {
+	customerItem data;
+	struct listCustomerItem* next;
+} listCustomerItem;
+
 // view all customer items function with item by itemid
 void viewAllCustomerItems(customerItem* customerItems, int size, nodeItem* root, nodeCustomer* customers) {
-	printf("-------------------------------------------------\n");
 	for (int i = 0; i < size; i++) {
 		nodeItem* item = searchByIdItem(root, customerItems[i].itemId);
 		printItem(&item->data);
 		customer* customer = searchCustomerById(customers, customerItems[i].customerId);
 		printCustomer(customer);
 		printf("Purchased Date: %s\n", ctime(&customerItems[i].purchasedDate));
+		printf("-------------------------------------------------\n");
 
 	}
-	printf("-------------------------------------------------\n");
 }
 // create addCustomerItem with array of customerItems and size
 void addCustomerItem(customerItem** customerItems, int* size, int customerId, int itemId) {
@@ -113,6 +117,17 @@ int isPurchaseDateInLast14Days(customerItem* customerItems, int size, int custom
 			if (customerItems[i].purchasedDate > time(NULL) - 14 * 24 * 60 * 60) {
 				count++;
 			}
+		}
+	}
+	return count;
+}
+
+// return number of items of customer by customer id
+int getNumberOfItemsOfCustomer(customerItem* customerItems, int size, int customerId) {
+	int count = 0;
+	for (int i = 0; i < size; i++) {
+		if (customerItems[i].customerId == customerId) {
+			count++;
 		}
 	}
 	return count;
