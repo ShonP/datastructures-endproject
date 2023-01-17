@@ -10,7 +10,6 @@
 #define _ITEMS_PROMPTS_H
 #pragma warning(disable:4996)
 
-//create item prompt by addItem function nodeItem
 void createItemPrompt(nodeItem** items) {
 	system("cls");
 	item* data = malloc(sizeof(item));
@@ -22,7 +21,7 @@ void createItemPrompt(nodeItem** items) {
 	scanf("%s", data->brand);
 	printf("Enter item price: ");
 	scanf("%f", &data->price);
-	printf("Enter item isNew: ");
+	printf("Enter item is new (0 for new , 1 for used): ");
 	scanf("%d", &data->isNew);
 	data->date = time(NULL);
 
@@ -35,7 +34,6 @@ void createItemPrompt(nodeItem** items) {
 	saveItems(*items);
 }
 
-//delete item prompt by removeItem function nodeItem
 void deleteItemPrompt(nodeItem** items) {
 	system("cls");
 	int id;
@@ -49,13 +47,11 @@ void deleteItemPrompt(nodeItem** items) {
 	saveItems(*items);
 }
 
-//view all items by printTree function nodeItem
 void viewAllItemsPrompt(nodeItem* items) {
 	system("cls");
 	printTreeItems(items);
 }
 
-//search item by id prompt by searchByIdItem function nodeItem
 void searchItemByIdPrompt(nodeItem* items) {
 	system("cls");
 	int id;
@@ -70,7 +66,6 @@ void searchItemByIdPrompt(nodeItem* items) {
 	}
 }
 
-//search item by phone name prompt by searchByPhoneNameItem function nodeItem
 void searchItemByPhoneNamePrompt(nodeItem* items) {
 	system("cls");
 	char phoneName[32];
@@ -85,7 +80,6 @@ void searchItemByPhoneNamePrompt(nodeItem* items) {
 	}
 }
 
-//void search item by brand prompt by searchByBrandItem function listItem
 void searchItemByBrandPrompt(nodeItem* items) {
 	system("cls");
 	char brand[32];
@@ -102,6 +96,7 @@ void searchItemByBrandPrompt(nodeItem* items) {
 		}
 	}
 }
+
 void searchItemByIsNewPrompt(nodeItem* items) {
 	system("cls");
 	int isNew;
@@ -119,7 +114,6 @@ void searchItemByIsNewPrompt(nodeItem* items) {
 	}
 }
 
-// update item prompt
 void updateItemPrompt(nodeItem** items) {
 	system("cls");
 	int id;
@@ -137,7 +131,7 @@ void updateItemPrompt(nodeItem** items) {
 		scanf("%s", result->data.brand);
 		printf("Enter new item price: ");
 		scanf("%f", &result->data.price);
-		printf("Enter new item isNew: ");
+		printf("Enter item is new (0 for new , 1 for used): ");
 		scanf("%d", &result->data.isNew);
 
 		char log[100];
@@ -147,10 +141,8 @@ void updateItemPrompt(nodeItem** items) {
 	}
 }
 
-// create searchByDateItems prompt
 void searchItemByDatePrompt(nodeItem* items) {
 	system("cls");
-	// scan date
 	int day, month, year;
 	printf("Enter day: ");
 	scanf("%d", &day);
@@ -158,7 +150,6 @@ void searchItemByDatePrompt(nodeItem* items) {
 	scanf("%d", &month);
 	printf("Enter year: ");
 	scanf("%d", &year);
-	// scan is above
 	int isAbove;
 	printf("Enter isAbove: ");
 	scanf("%d", &isAbove);

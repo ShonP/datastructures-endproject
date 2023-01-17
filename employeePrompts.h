@@ -21,13 +21,13 @@ void createEmployeePrompt(employee** employees, int* numEmployees) {
 	printf("Enter access level: ");
 	scanf("%d", &newEmployee->accessLevel);
 	addEmployee(employees, numEmployees, newEmployee);
+	
 	char log[100];
 	snprintf(log, sizeof(log), "%s created employee successfully", newEmployee->username);
 	logMessage(&log);
 	saveEmployees(*employees, *numEmployees);
 }
 
-// remove employee prompt
 void removeEmployeePrompt(employee** employees, int* numEmployees) {
 	system("cls");
 	char username[32];
@@ -46,7 +46,6 @@ void removeEmployeePrompt(employee** employees, int* numEmployees) {
 
 }
 
-// search employee by full name prompt
 void searchEmployeeByFullNamePrompt(employee* employees, int numEmployees) {
 	system("cls");
 	char fullName[32];
@@ -62,7 +61,6 @@ void searchEmployeeByFullNamePrompt(employee* employees, int numEmployees) {
 	}
 }
 
-//searchEmployeeByUsernamePrompt
 void searchEmployeeByUsernamePrompt(employee* employees, int numEmployees) {
 	system("cls");
 	char username[32];
@@ -78,7 +76,6 @@ void searchEmployeeByUsernamePrompt(employee* employees, int numEmployees) {
 	}
 }
 
-// function to view all employees
 void viewAllEmployeesPrompt(const employee* employees, int employeesSize) {
 	system("cls");
 	printf("All employees:\n");
@@ -86,9 +83,6 @@ void viewAllEmployeesPrompt(const employee* employees, int employeesSize) {
 		printEmployee(&employees[i]);
 	}
 }
-
-
-// create all view prompts prompt
 
 void employeePrompts(const employee** employees, int* employeesSize, int accessLevel) {
 	system("cls");
@@ -142,5 +136,4 @@ void employeePrompts(const employee** employees, int* employeesSize, int accessL
 	} while (choice != 0);
 
 }
-
 #endif

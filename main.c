@@ -45,7 +45,6 @@ void prompts(nodeItem** items, nodeCustomer** customers, employee** employees, i
 	} while (choice != 0);
 }
 
-
 int main(int argc, char* argv[]) {
 	initializeLogs();
 	employee* employees;

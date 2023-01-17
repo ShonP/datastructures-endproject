@@ -11,7 +11,7 @@
 
 #pragma warning(disable:4996)
 
-// create buy prompt function
+
 void buyPrompt(nodeCustomer** customers, nodeItem** items, customerItem** customerItems, int* size) {
 	system("cls");
 	printf("All items:\n");
@@ -28,7 +28,7 @@ void buyPrompt(nodeCustomer** customers, nodeItem** items, customerItem** custom
 		printf("Customer has already bought 3 items\n");
 		return;
 	}
-	// search customer by id
+
 	nodeCustomer* customer = searchCustomerById(*customers, customerId);
 	if (customer == NULL) {
 		printf("Wrong customer id");
@@ -36,7 +36,7 @@ void buyPrompt(nodeCustomer** customers, nodeItem** items, customerItem** custom
 	}
 	printf("Enter item id: ");
 	scanf("%d", &itemId);
-	// search item by id
+
 	nodeItem* item = searchByIdItem(*items, itemId);
 	if (item == NULL) {
 		printf("Wrong item id");
@@ -46,8 +46,6 @@ void buyPrompt(nodeCustomer** customers, nodeItem** items, customerItem** custom
 	saveCustomerItems(*customerItems, *size);
 }
 
-
-// create refund function prompt and only refund if purchaseDate in last 14 days
 void refundPrompt(nodeCustomer** customers, nodeItem** items, customerItem** customerItems, int* size) {
 	system("cls");
 
@@ -57,7 +55,6 @@ void refundPrompt(nodeCustomer** customers, nodeItem** items, customerItem** cus
 	printf("Enter customer id: ");
 	scanf("%d", &customerId);
 
-	// search customer by id
 	nodeCustomer* customer = searchCustomerById(*customers, customerId);
 	if (customer == NULL) {
 		printf("Wrong customer id");
@@ -65,19 +62,19 @@ void refundPrompt(nodeCustomer** customers, nodeItem** items, customerItem** cus
 	}
 	printf("Enter item id: ");
 	scanf("%d", &itemId);
-	// search item by id
+	
 	nodeItem* item = searchByIdItem(*items, itemId);
 	if (item == NULL) {
 		printf("Wrong item id");
 		return;
 	}
-	// search customer item by customer id and item id
+	
 	customerItem* customerItem = searchCustomerItemByCustomerIdAndItemId(*customerItems, *size, customerId, itemId);
 	if (customerItem == NULL) {
 		printf("Customer didn't buy this item");
 		return;
 	}
-	// check if purchase date is in last 14 days
+	
 	if (isPurchaseDateInLast14Days(*customerItems, *size, customerId)) {
 		removeCustomerItem(customerItems, size, customerId, itemId);
 		saveCustomerItems(*customerItems, *size);
@@ -115,5 +112,4 @@ void shopPrompts(nodeCustomer** customers, nodeItem** items, customerItem** cust
 		}
 	} while (choice != 0);
 }
-
 #endif

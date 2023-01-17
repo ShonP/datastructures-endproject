@@ -94,7 +94,6 @@ void addEmployee(employee** employees, int* numEmployees, employee* newEmployee)
 	(*numEmployees)++;
 }
 
-// Function to remove an employee from the array and return success
 int removeEmployee(employee** employees, int* numEmployees, const char* username) {
 	// Allocate memory for the new employee
 	employee* newEmployees = (employee*)malloc(sizeof(employee) * (*numEmployees - 1));
@@ -188,7 +187,6 @@ employee* loginPrompt(int employeesSize, const employee* employees, int isSkip) 
 	return loggedInEmployee;
 }
 
-// function to search employee by fullName
 employee* searchEmployeeByFullName(const char* fullName, int employeesSize, const employee* employees) {
 	for (int i = 0; i < employeesSize; i++) {
 		if (strcmp(fullName, employees[i].fullName) == 0) {
@@ -198,7 +196,6 @@ employee* searchEmployeeByFullName(const char* fullName, int employeesSize, cons
 	return NULL;
 }
 
-// function to search employee by username
 employee* searchEmployeeByUsername(const char* username, int employeesSize, const employee* employees) {
 	for (int i = 0; i < employeesSize; i++) {
 		if (strcmp(username, employees[i].username) == 0) {
@@ -208,7 +205,6 @@ employee* searchEmployeeByUsername(const char* username, int employeesSize, cons
 	return NULL;
 }
 
-//print employee
 void printEmployee(const employee* employee) {
 	printf("----------------\n");
 	printf("Username: %s\n", employee->username);

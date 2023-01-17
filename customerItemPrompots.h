@@ -9,7 +9,6 @@
 
 #pragma warning(disable:4996)
 
-// create addCustomerItemPrompt with array of customerItems and size
 void addCustomerItemPrompt(customerItem** customerItems, int* size) {
 	int customerId;
 	int itemId;
@@ -18,13 +17,29 @@ void addCustomerItemPrompt(customerItem** customerItems, int* size) {
 	printf("Enter item id: ");
 	scanf("%d", &itemId);
 	addCustomerItem(customerItems, size, customerId, itemId);
+	
+	char log[100];
+	snprintf(log, sizeof(log), "%d Added item for sale successfully", itemId);
+	logMessage(&log);
 }
 
-// create view all customer items prompt function
+void deleteCustomerItemPrompt(customerItem** customerItems, int* size) {
+	int customerId;
+	int itemId;
+	printf("Enter customer id: ");
+	scanf("%d", &customerId);
+	printf("Enter item id: ");
+	scanf("%d", &itemId);
+	removeCustomerItem(customerItems, size, customerId, itemId);
+	
+	char log[100];
+	snprintf(log, sizeof(log), "%d Remove item for sale successfully", itemId);
+	logMessage(&log);
+}
+
 void viewAllCustomerItemsPrompt(customerItem* customerItems, int size, item* root, customer* customers) {
 	system("cls");
 	
 	viewAllCustomerItems(customerItems, size, root, customers);
 }
-
 #endif

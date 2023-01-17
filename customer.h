@@ -6,7 +6,6 @@
 #define _CUSTOMERS_H_
 
 #pragma warning(disable:4996)
-// create customer struct with dynamic items with joined date
 typedef struct customer {
 	int id;
 	char name[32];
@@ -14,7 +13,6 @@ typedef struct customer {
 	time_t date;
 } customer;
 
-// create linked list of customers that is sorted by joinedDate
 typedef struct nodeCustomer {
 	customer data;
 	struct nodeCustomer* next;
@@ -48,7 +46,6 @@ void addCustomer(nodeCustomer** customers, customer* data) {
 	}
 }
 
-// remove Customer function by id and return success
 int removeCustomer(nodeCustomer** customers, int id) {
 	if (*customers == NULL) {
 		return 0;
@@ -72,7 +69,6 @@ int removeCustomer(nodeCustomer** customers, int id) {
 	return 1;
 }
 
-// create initialize function of customers that reads from file and is sorted by joinedDate
 void initializeCustomers(nodeCustomer** customers) {
 	// allocate customers root
 	*customers = NULL;
@@ -100,7 +96,6 @@ void initializeCustomers(nodeCustomer** customers) {
 	}
 }
 
-// create search function by id
 customer* searchCustomerById(nodeCustomer* customers, int id) {
 	while (customers != NULL) {
 		if (customers->data.id == id) {
@@ -111,7 +106,6 @@ customer* searchCustomerById(nodeCustomer* customers, int id) {
 	return NULL;
 }
 
-//create search function by name
 customer* searchCustomerByName(nodeCustomer* customers, char* name) {
 	while (customers != NULL) {
 		if (strcmp(customers->data.name, name) == 0) {
@@ -122,7 +116,6 @@ customer* searchCustomerByName(nodeCustomer* customers, char* name) {
 	return NULL;
 }
 
-// create search function by address
 customer* searchCustomerByAddress(nodeCustomer* customers, char* address) {
 	while (customers != NULL) {
 		if (strcmp(customers->data.address, address) == 0) {
@@ -133,7 +126,6 @@ customer* searchCustomerByAddress(nodeCustomer* customers, char* address) {
 	return NULL;
 }
 
-// create search function by joinedDate
 customer* searchCustomerByDate(nodeCustomer* customers, time_t date) {
 	while (customers != NULL) {
 		if (customers->data.date == date) {
@@ -144,7 +136,6 @@ customer* searchCustomerByDate(nodeCustomer* customers, time_t date) {
 	return NULL;
 }
 
-// create print function
 void printCustomer(customer* data) {
 	printf("------------\n");
 	printf("Customer ID: %d\n", data->id);
@@ -153,7 +144,6 @@ void printCustomer(customer* data) {
 	printf("Customer Joined Date: %s", ctime(&data->date));
 }
 
-// create print all linkedlist
 void printCustomers(nodeCustomer* customers) {
 	while (customers != NULL) {
 		printCustomer(&customers->data);
@@ -161,7 +151,6 @@ void printCustomers(nodeCustomer* customers) {
 	}
 }
 
-// create save function that saves the list to file
 void saveCustomers(nodeCustomer* customers) {
 	FILE* fp = fopen("customers.bin", "w");
 	if (fp == NULL) {

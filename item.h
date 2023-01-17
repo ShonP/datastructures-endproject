@@ -28,7 +28,6 @@ typedef struct listItem {
 	struct listItem* next;
 } listItem;
 
-// Function prototypes
 nodeItem* initializeItems();
 void addItem(nodeItem** root, item* data);
 void removeItem(nodeItem** root, int id);
@@ -88,26 +87,23 @@ listItem* searchByDateItems(nodeItem* root, time_t date, bool isAbove) {
 	return list;
 }
 
-// create printItem function
 void printItem(item* data) {
 	printf("------------\n");
 	printf("Item Id: %d\n", data->id);
 	printf("Phone name: %s\n", data->phoneName);
 	printf("Brand: %s\n", data->brand);
 	printf("Price: %g\n", data->price);
-	printf("Is new: %d\n", data->isNew);
+	printf("Is new (0 for new, 1 for used): %d\n", data->isNew);
 	printf("In store since: %s", ctime(&data->date));
 }
 
 nodeItem* initializeItems() {
 	nodeItem* root = NULL;
 
-	// Open file for reading
 	FILE* fp = fopen("items.bin", "r");
 	if (fp == NULL) {
 		printf("Initialize new file items\n");
 
-		// File doesn't exist, create it
 		fp = fopen("items.bin", "w");
 		if (fp == NULL) {
 			printf("Error creating file\n");
@@ -116,7 +112,6 @@ nodeItem* initializeItems() {
 	}
 	else {
 		printf("Loading existing items file\n");
-		// Read data from file and addItem it to the tree
 		while (1) {
 			item data;
 			int result = fread(&data, sizeof(item), 1, fp);
@@ -130,7 +125,6 @@ nodeItem* initializeItems() {
 	fclose(fp);
 	return root;
 }
-
 
 void addItem(nodeItem** root, item* data) {
 	if (*root == NULL) {
@@ -148,12 +142,12 @@ void addItem(nodeItem** root, item* data) {
 		}
 	}
 }
+
 void removeItem(nodeItem** root, int id) {
 	if (*root == NULL) {
 		return;
 	}
 
-	// Recursively search the tree for the nodeItem with the given id
 	if (id < (*root)->data.id) {
 		removeItem(&(*root)->left, id);
 	}
@@ -161,7 +155,6 @@ void removeItem(nodeItem** root, int id) {
 		removeItem(&(*root)->right, id);
 	}
 	else {
-		// Node found, remove it
 		nodeItem* temp = *root;
 		if ((*root)->left == NULL) {
 			*root = (*root)->right;
@@ -172,7 +165,6 @@ void removeItem(nodeItem** root, int id) {
 			free(temp);
 		}
 		else {
-			// Node has two children, find the inorder successor
 			nodeItem* successor = (*root)->right;
 			while (successor->left
 				!= NULL) {
@@ -180,7 +172,6 @@ void removeItem(nodeItem** root, int id) {
 			}  (*root)->data = successor->data;
 			removeItem(&(*root)->right, successor->data.id);
 		}
-
 	}
 }
 
@@ -197,12 +188,9 @@ void saveTreeItems(struct nodeItem* root, FILE* fp) {
 void saveItems(struct Node* root) {
 	FILE* fp = fopen("items.bin", "w");
 	if (fp == NULL) {
-		// Error opening file
 		return;
 	}
-
 	saveTreeItems(root, fp);
-
 	fclose(fp);
 }
 
@@ -265,7 +253,6 @@ listItem* searchByPhoneNameItem(nodeItem* root, const char* phoneName) {
 			current->next = rightResult;
 		}
 	}
-
 	return result;
 }
 
@@ -296,7 +283,6 @@ listItem* searchByBrandItems(nodeItem* root, char* searchKey) {
 			current->next = rightResult;
 		}
 	}
-
 	return result;
 }
 

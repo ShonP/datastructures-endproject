@@ -7,7 +7,7 @@
 #define _CUSTOMER_ITEM_H_
 
 #pragma warning(disable:4996)
-// create customer struct with dynamic items with joined date
+
 typedef struct customerItem {
 	int generatedId;
 	int customerId;
@@ -20,7 +20,6 @@ typedef struct listCustomerItem {
 	struct listCustomerItem* next;
 } listCustomerItem;
 
-// view all customer items function with item by itemid
 void viewAllCustomerItems(customerItem* customerItems, int size, nodeItem* root, nodeCustomer* customers) {
 	for (int i = 0; i < size; i++) {
 		nodeItem* item = searchByIdItem(root, customerItems[i].itemId);
@@ -32,7 +31,7 @@ void viewAllCustomerItems(customerItem* customerItems, int size, nodeItem* root,
 
 	}
 }
-// create addCustomerItem with array of customerItems and size
+
 void addCustomerItem(customerItem** customerItems, int* size, int customerId, int itemId) {
 	customerItem* newCustomerItem = (customerItem*)malloc(sizeof(customerItem));
 	newCustomerItem->generatedId = *size + 1;
@@ -44,7 +43,7 @@ void addCustomerItem(customerItem** customerItems, int* size, int customerId, in
 	*customerItems = (customerItem*)realloc(*customerItems, *size * sizeof(customerItem));
 	(*customerItems)[*size - 1] = *newCustomerItem;
 }
-// remove addCustomerItem with array of customerItems and size by customerId and itemId
+
 void removeCustomerItem(customerItem** customerItems, int* size, int customerId, int itemId) {
 	for (int i = 0; i < *size; i++) {
 		if ((*customerItems)[i].customerId == customerId && (*customerItems)[i].itemId == itemId) {
@@ -73,7 +72,6 @@ void saveCustomerItems(const customerItem* customerItems, int numCustomerItems) 
 	fclose(fp);
 }
 
-// create searchCustomerItem function by customerId and itemId
 customerItem* searchCustomerItemByCustomerIdAndItemId(customerItem* customerItems, int size, int customerId, int itemId) {
 	for (int i = 0; i < size; i++) {
 		if (customerItems[i].customerId == customerId && customerItems[i].itemId == itemId) {
@@ -88,15 +86,12 @@ int initializeCustomerItems(customerItem** customerItems) {
 	int i;
 	int array_size;
 	customerItem* d_array;
-	// Check if the input file exists
 	if (!infile) {
 		printf("Initialize new file customerItem\n");
-		// If the input file does not exist, create an empty array of structs
 		array_size = 0;
 		d_array = malloc(array_size * sizeof(customerItem));
 	}
 	else {
-		// If the input file exists, read the data from the file and store it in an array of structs
 		printf("Loading existing customerItem file\n");
 		fread(&array_size, sizeof(int), 1, infile);
 		d_array = malloc(array_size * sizeof(customerItem));
@@ -109,7 +104,6 @@ int initializeCustomerItems(customerItem** customerItems) {
 	return array_size;
 }
 
-// isPurchaseDateInLast14Days
 int isPurchaseDateInLast14Days(customerItem* customerItems, int size, int customerId) {
 	int count = 0;
 	for (int i = 0; i < size; i++) {
@@ -122,7 +116,6 @@ int isPurchaseDateInLast14Days(customerItem* customerItems, int size, int custom
 	return count;
 }
 
-// return number of items of customer by customer id
 int getNumberOfItemsOfCustomer(customerItem* customerItems, int size, int customerId) {
 	int count = 0;
 	for (int i = 0; i < size; i++) {

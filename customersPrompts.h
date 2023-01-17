@@ -11,14 +11,13 @@
 
 #pragma warning(disable:4996)
 
-// delete a customer prompt
 void deleteCustomerPrompt(nodeCustomer** customers) {
 	int id;
 	printf("Enter customer id: ");
 	scanf("%d", &id);
 	if (removeCustomer(customers, id)) {
 		char log[100];
-		snprintf(log, sizeof(log), "%d removed employee successfully", id);
+		snprintf(log, sizeof(log), "%d removed customer successfully", id);
 		logMessage(&log);
 		saveCustomers(*customers);
 	}
@@ -27,7 +26,6 @@ void deleteCustomerPrompt(nodeCustomer** customers) {
 	}
 }
 
-// Create a new customer prompt with empty items
 void createCustomerPrompt(nodeCustomer** customers) {
 	system("cls");
 	customer* customer = malloc(sizeof(customer));
@@ -48,7 +46,6 @@ void createCustomerPrompt(nodeCustomer** customers) {
 	saveCustomers(*customers);
 }
 
-// search customer by full name prompt with searchCustomerByName
 void searchCustomerByNamePrompt(nodeCustomer* customers) {
 	system("cls");
 	char name[32];
@@ -63,11 +60,9 @@ void searchCustomerByNamePrompt(nodeCustomer* customers) {
 	}
 }
 
-// view all customers prompt with printCustomers
 void viewAllCustomersPrompt(nodeCustomer* customers) {
 	printCustomers(customers);
 }
-
 
 void level1CustomerPrompts(nodeCustomer** customers) {
 	int choice;
@@ -155,7 +150,6 @@ void level3CustomerPrompts(nodeCustomer** customers) {
 	} while (choice != 0);
 }
 
-
 void customerPrompts(nodeCustomer** customers, int accessLevel) {
 	int choice;
 	system("cls");
@@ -195,5 +189,4 @@ void customerPrompts(nodeCustomer** customers, int accessLevel) {
 		}
 	} while (choice != 0);
 }
-
 #endif
